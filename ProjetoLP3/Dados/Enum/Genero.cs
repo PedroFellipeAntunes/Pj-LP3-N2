@@ -1,0 +1,39 @@
+﻿namespace ProjetoLP3.Dados.Enum
+{
+    public enum Genero
+    {
+        Acao,
+        Comedia,
+        Drama,
+        Romance,
+        Documentario,
+        Suspense,
+        Terror,
+        FiccaoCientifica,
+        Fantasia,
+        Animação,
+        Musical,
+        Faroeste,
+        Policial,
+        Aventura,
+        Biografia,
+        Histórico,
+        Guerra,
+        Esporte,
+        Familiar,
+        Noir,
+        SuperHeroi,
+        Espionagem,
+        FantasiaCientifica,
+        Mockumentary,
+        Anime,
+        Cult,
+        Experimental,
+        RoadMovie,
+        Steampunk,
+        Cyberpunk,
+        NeoNoir,
+        PósApocalíptico,
+        Zumbi
+    }
+}
