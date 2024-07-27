@@ -6,7 +6,7 @@ namespace ProjetoLP3.Dados
     public class Filme
     {
         private int idFilme;
-        private string nome;
+        private string nome; //teste git
         private string descrição;
         private int duração; //Modificado de float para int, considerar isto como segundos
         private int faixaEtaria;
