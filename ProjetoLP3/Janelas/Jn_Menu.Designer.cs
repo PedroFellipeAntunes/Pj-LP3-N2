@@ -33,13 +33,14 @@
             meusFilmesToolStripMenuItem = new ToolStripMenuItem();
             cadastrarFilmeToolStripMenuItem = new ToolStripMenuItem();
             contaToolStripMenuItem = new ToolStripMenuItem();
+            tstAluguelToolStripMenuItem = new ToolStripMenuItem();
             Ms_Menu.SuspendLayout();
             SuspendLayout();
             // 
             // Ms_Menu
             // 
             Ms_Menu.Dock = DockStyle.Left;
-            Ms_Menu.Items.AddRange(new ToolStripItem[] { catálogoDeFilmesToolStripMenuItem, meusFilmesToolStripMenuItem, cadastrarFilmeToolStripMenuItem, contaToolStripMenuItem });
+            Ms_Menu.Items.AddRange(new ToolStripItem[] { catálogoDeFilmesToolStripMenuItem, meusFilmesToolStripMenuItem, cadastrarFilmeToolStripMenuItem, contaToolStripMenuItem, tstAluguelToolStripMenuItem });
             Ms_Menu.Location = new Point(0, 0);
             Ms_Menu.Name = "Ms_Menu";
             Ms_Menu.Size = new Size(126, 360);
@@ -74,6 +75,13 @@
             contaToolStripMenuItem.Text = "Conta";
             contaToolStripMenuItem.Click += abrirJanelaConta;
             // 
+            // tstAluguelToolStripMenuItem
+            // 
+            tstAluguelToolStripMenuItem.Name = "tstAluguelToolStripMenuItem";
+            tstAluguelToolStripMenuItem.Size = new Size(113, 19);
+            tstAluguelToolStripMenuItem.Text = "tst aluguel";
+            tstAluguelToolStripMenuItem.Click += tstAluguelToolStripMenuItem_Click;
+            // 
             // Jn_Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -98,5 +106,6 @@
         private ToolStripMenuItem catálogoDeFilmesToolStripMenuItem;
         private ToolStripMenuItem meusFilmesToolStripMenuItem;
         private ToolStripMenuItem cadastrarFilmeToolStripMenuItem;
+        private ToolStripMenuItem tstAluguelToolStripMenuItem;
     }
 }
