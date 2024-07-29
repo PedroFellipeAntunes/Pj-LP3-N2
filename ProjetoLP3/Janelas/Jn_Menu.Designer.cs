@@ -29,51 +29,52 @@
         private void InitializeComponent()
         {
             Ms_Menu = new MenuStrip();
-            catálogoDeFilmesToolStripMenuItem = new ToolStripMenuItem();
-            meusFilmesToolStripMenuItem = new ToolStripMenuItem();
-            cadastrarFilmeToolStripMenuItem = new ToolStripMenuItem();
-            contaToolStripMenuItem = new ToolStripMenuItem();
+            Bt_Catalogo = new ToolStripMenuItem();
+            Bt_MeusFilmes = new ToolStripMenuItem();
+            Bt_CadastrarFilme = new ToolStripMenuItem();
+            Bt_Conta = new ToolStripMenuItem();
             tstAluguelToolStripMenuItem = new ToolStripMenuItem();
+            Bt_Fechar = new ToolStripMenuItem();
             Ms_Menu.SuspendLayout();
             SuspendLayout();
             // 
             // Ms_Menu
             // 
             Ms_Menu.Dock = DockStyle.Left;
-            Ms_Menu.Items.AddRange(new ToolStripItem[] { catálogoDeFilmesToolStripMenuItem, meusFilmesToolStripMenuItem, cadastrarFilmeToolStripMenuItem, contaToolStripMenuItem, tstAluguelToolStripMenuItem });
+            Ms_Menu.Items.AddRange(new ToolStripItem[] { Bt_Catalogo, Bt_MeusFilmes, Bt_CadastrarFilme, Bt_Conta, tstAluguelToolStripMenuItem, Bt_Fechar });
             Ms_Menu.Location = new Point(0, 0);
             Ms_Menu.Name = "Ms_Menu";
             Ms_Menu.Size = new Size(126, 360);
             Ms_Menu.TabIndex = 1;
             Ms_Menu.Text = "Ms_Menu";
             // 
-            // catálogoDeFilmesToolStripMenuItem
+            // Bt_Catalogo
             // 
-            catálogoDeFilmesToolStripMenuItem.Name = "catálogoDeFilmesToolStripMenuItem";
-            catálogoDeFilmesToolStripMenuItem.Size = new Size(113, 19);
-            catálogoDeFilmesToolStripMenuItem.Text = "Catálogo de Filmes";
-            catálogoDeFilmesToolStripMenuItem.Click += abrirJanelaCatalogoFilmes;
+            Bt_Catalogo.Name = "Bt_Catalogo";
+            Bt_Catalogo.Size = new Size(113, 19);
+            Bt_Catalogo.Text = "Catálogo de Filmes";
+            Bt_Catalogo.Click += Bt_Catalogo_Click;
             // 
-            // meusFilmesToolStripMenuItem
+            // Bt_MeusFilmes
             // 
-            meusFilmesToolStripMenuItem.Name = "meusFilmesToolStripMenuItem";
-            meusFilmesToolStripMenuItem.Size = new Size(113, 19);
-            meusFilmesToolStripMenuItem.Text = "Meus Filmes";
-            meusFilmesToolStripMenuItem.Click += abrirJanelaFilmesUsuario;
+            Bt_MeusFilmes.Name = "Bt_MeusFilmes";
+            Bt_MeusFilmes.Size = new Size(113, 19);
+            Bt_MeusFilmes.Text = "Meus Filmes";
+            Bt_MeusFilmes.Click += Bt_MeusFilmes_Click;
             // 
-            // cadastrarFilmeToolStripMenuItem
+            // Bt_CadastrarFilme
             // 
-            cadastrarFilmeToolStripMenuItem.Name = "cadastrarFilmeToolStripMenuItem";
-            cadastrarFilmeToolStripMenuItem.Size = new Size(113, 19);
-            cadastrarFilmeToolStripMenuItem.Text = "Cadastrar Filme";
-            cadastrarFilmeToolStripMenuItem.Click += abrirJanelaCadastrarFilme;
+            Bt_CadastrarFilme.Name = "Bt_CadastrarFilme";
+            Bt_CadastrarFilme.Size = new Size(113, 19);
+            Bt_CadastrarFilme.Text = "Cadastrar Filme";
+            Bt_CadastrarFilme.Click += Bt_CadastrarFilmes_Click;
             // 
-            // contaToolStripMenuItem
+            // Bt_Conta
             // 
-            contaToolStripMenuItem.Name = "contaToolStripMenuItem";
-            contaToolStripMenuItem.Size = new Size(113, 19);
-            contaToolStripMenuItem.Text = "Conta";
-            contaToolStripMenuItem.Click += abrirJanelaConta;
+            Bt_Conta.Name = "Bt_Conta";
+            Bt_Conta.Size = new Size(113, 19);
+            Bt_Conta.Text = "Conta";
+            Bt_Conta.Click += Bt_Conta_Click;
             // 
             // tstAluguelToolStripMenuItem
             // 
@@ -81,6 +82,13 @@
             tstAluguelToolStripMenuItem.Size = new Size(113, 19);
             tstAluguelToolStripMenuItem.Text = "tst aluguel";
             tstAluguelToolStripMenuItem.Click += tstAluguelToolStripMenuItem_Click;
+            // 
+            // Bt_Fechar
+            // 
+            Bt_Fechar.Name = "Bt_Fechar";
+            Bt_Fechar.Size = new Size(113, 19);
+            Bt_Fechar.Text = "FECHAR";
+            Bt_Fechar.Click += Bt_Fechar_Click;
             // 
             // Jn_Menu
             // 
@@ -92,7 +100,7 @@
             MainMenuStrip = Ms_Menu;
             Name = "Jn_Menu";
             Text = "Menu";
-            Load += Form1_Load;
+            Load += Jn_Menu_Load;
             Ms_Menu.ResumeLayout(false);
             Ms_Menu.PerformLayout();
             ResumeLayout(false);
@@ -102,10 +110,11 @@
         #endregion
 
         private MenuStrip Ms_Menu;
-        private ToolStripMenuItem contaToolStripMenuItem;
-        private ToolStripMenuItem catálogoDeFilmesToolStripMenuItem;
-        private ToolStripMenuItem meusFilmesToolStripMenuItem;
-        private ToolStripMenuItem cadastrarFilmeToolStripMenuItem;
+        private ToolStripMenuItem Bt_Conta;
+        private ToolStripMenuItem Bt_Catalogo;
+        private ToolStripMenuItem Bt_MeusFilmes;
+        private ToolStripMenuItem Bt_CadastrarFilme;
         private ToolStripMenuItem tstAluguelToolStripMenuItem;
+        private ToolStripMenuItem Bt_Fechar;
     }
 }

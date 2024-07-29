@@ -8,10 +8,10 @@ namespace ProjetoLP3
 {
     public partial class Jn_Menu : Form
     {
-        public Usuario usuario; //Modificado para public não precisa passar por parametro
+        private Usuario usuario;
 
-        private Ct_VisualJanela visual = new Ct_VisualJanela();
-        private Ct_JanelaStatus status = new Ct_JanelaStatus();
+        private Ct_VisualJanela ct_Visual = new Ct_VisualJanela();
+        private Ct_JanelaStatus ct_Status = new Ct_JanelaStatus();
 
         public Jn_Menu(Usuario usuario)
         {
@@ -19,35 +19,43 @@ namespace ProjetoLP3
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Jn_Menu_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void abrirJanelaCatalogoFilmes(object sender, EventArgs e)
+        private void Bt_Catalogo_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void abrirJanelaConta(object sender, EventArgs e)
+        private void Bt_Conta_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(usuario.ToString()); //Teste excluir dps
+            MessageBox.Show(usuario.ToString(), "CONTA"); //Teste excluir dps
+            //Teste excluir dps
+            if (usuario.ListaAlugueis != null)
+            {
+                foreach (Aluguel al in usuario.ListaAlugueis)
+                {
+                    MessageBox.Show(al.ToString(), "ALUGUEL"); //Teste excluir dps
+                }
+            }
         }
 
-        private void abrirJanelaFilmesUsuario(object sender, EventArgs e)
+        private void Bt_MeusFilmes_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void abrirJanelaCadastrarFilme(object sender, EventArgs e)
+        private void Bt_CadastrarFilmes_Click(object sender, EventArgs e)
         {
 
         }
         //codigo de teste, apagar este botao dps
         private void tstAluguelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Verificar se a janela já está aberta
-            if (status.janelaAberta<Jn_Aluguel>())
+            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            if (ct_Status.janelaAberta<Jn_Aluguel>())
             {
                 return;
             }
@@ -94,10 +102,20 @@ namespace ProjetoLP3
             lf.Add(f2);
             lf.Add(f3);
 
-            Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this, lf);
-            visual.janelaGrande(jn_Aluguel);
+            Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this, this.usuario, lf);
+            ct_Visual.janelaGrande(jn_Aluguel);
 
-            jn_Aluguel.Show();
+            //Evitar mostrar janela se ela foi fechada por erro
+            if (!jn_Aluguel.IsDisposed)
+            {
+                jn_Aluguel.Show();
+            }
+        }
+
+        private void Bt_Fechar_Click(object sender, EventArgs e)
+        {
+            //Botão que fecha todas as janelas atuais exceto o Menu
+            ct_Status.fecharTudo();
         }
     }
 }

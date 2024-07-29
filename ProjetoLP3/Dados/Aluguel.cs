@@ -1,4 +1,5 @@
-﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+﻿using ProjetoLP3.Dados.Enum;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace ProjetoLP3.Dados
 {
@@ -7,11 +8,11 @@ namespace ProjetoLP3.Dados
         private int idAluguel;
         private string dataInicial;
         private string dataFinal;
-        private bool status;
+        private Status status;
 
         private List<Filme> listaFilmes;
 
-        public Aluguel(string dataInicial, string dataFinal, bool status, List<Filme> listaFilmes)
+        public Aluguel(string dataInicial, string dataFinal, Status status, List<Filme> listaFilmes)
         {
             this.dataInicial = dataInicial;
             this.dataFinal = dataFinal;
@@ -22,13 +23,13 @@ namespace ProjetoLP3.Dados
         public int IdAluguel { get { return idAluguel; } set { idAluguel = value; } }
         public string DataInicial { get { return dataInicial; } set { dataInicial = value; } }
         public string DataFinal { get { return dataFinal; } set {dataFinal = value; } }
-        public bool Status { get { return status; } set { status = value; } }
+        public Status Status { get { return status; } set { status = value; } }
         public List<Filme> ListaFilmes { get { return listaFilmes; } set { listaFilmes = value; } }
 
         //To String
         public override string ToString()
         {
-            return $"DataInicial: {dataInicial}, DataFinal: {dataFinal}, Status: {status}";
+            return $"DataInicial: {dataInicial}, DataFinal: {dataFinal}, Status: {status}, Quantidade de Filmes: {listaFilmes.Count}";
         }
     }
 }

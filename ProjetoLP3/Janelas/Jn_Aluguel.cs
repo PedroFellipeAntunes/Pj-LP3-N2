@@ -14,16 +14,26 @@ namespace ProjetoLP3.Janelas
 {
     public partial class Jn_Aluguel : Form
     {
-        Ct_Aluguel ct_Aluguel = new Ct_Aluguel();
+        private Ct_Aluguel ct_Aluguel = new Ct_Aluguel();
+
+        private Usuario usuario;
 
         private List<Filme> listaFilmesOriginal; //Backup para reset
         private List<Filme> listaFilmesNova;
 
-        public Jn_Aluguel(Form MDIpai, List<Filme> listaFilmes)
+        public Jn_Aluguel(Form MDIpai, Usuario usuario, List<Filme> listaFilmes)
         {
             this.MdiParent = MDIpai;
+            this.usuario = usuario;
             this.listaFilmesOriginal = listaFilmes;
             this.listaFilmesNova = new List<Filme>(listaFilmesOriginal);
+
+            if (this.MdiParent == null || this.usuario == null || listaFilmesOriginal == null)
+            {
+                MessageBox.Show("Valor nulo em construtor de classe", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
 
             InitializeComponent();
         }
@@ -49,10 +59,7 @@ namespace ProjetoLP3.Janelas
             Temporizador.Start();
         }
 
-        private void Vw_Filmes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
+        //OPERAÇÕES LOGICAS
         private void Bt_Remover_Click(object sender, EventArgs e)
         {
             //Verifica se algum item está selecionado
@@ -79,12 +86,16 @@ namespace ProjetoLP3.Janelas
 
         private void Bt_Alugar_Click(object sender, EventArgs e)
         {
-            if (this.MdiParent != null)
+            if (this.usuario != null && listaFilmesNova.Count != 0)
             {
-                //Obter o usuario de menu
-                Jn_Menu telaMenu = (Jn_Menu) this.MdiParent;
+                ct_Aluguel.gerarAluguel(listaFilmesNova, this.usuario, DateTime.Now);
 
-                ct_Aluguel.gerarAluguel(listaFilmesNova, telaMenu.usuario);
+                //Confirmação para o usuario
+                MessageBox.Show("Aluguel gerado, aguardando pagamento", "Sucesso", MessageBoxButtons.OK);
+                this.Close();
+            } else
+            {
+                MessageBox.Show("Requer pelo menos 1 (um) filme para efetuar aluguel.", "Lista vazia", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -116,7 +127,7 @@ namespace ProjetoLP3.Janelas
         private void loadDataFinal()
         {
             Mc_DataFinal.Enabled = false;
-            Mc_DataFinal.SetDate(ct_Aluguel.GetDateSevenDaysLater(DateTime.Today));
+            Mc_DataFinal.SetDate(ct_Aluguel.data7Dias(DateTime.Today));
             Tb_DataFinal.Text = Mc_DataFinal.SelectionStart.ToString("dd/MM/yyyy");
             Tb_HoraFinal.Text = DateTime.Now.ToString("HH:mm:ss");
         }
@@ -136,6 +147,11 @@ namespace ProjetoLP3.Janelas
         {
             Tb_HoraAtual.Text = DateTime.Now.ToString("HH:mm:ss");
             Tb_HoraFinal.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        //IGNORAR
+        private void Vw_Filmes_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }

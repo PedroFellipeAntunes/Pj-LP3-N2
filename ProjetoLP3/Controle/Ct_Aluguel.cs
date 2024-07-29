@@ -36,7 +36,7 @@ namespace ProjetoLP3.Controle
             }
         }
 
-        public DateTime GetDateSevenDaysLater(DateTime dataAtual)
+        public DateTime data7Dias(DateTime dataAtual)
         {
             //Adiciona 7 dias à data atual
             return dataAtual.AddDays(7);
@@ -58,9 +58,22 @@ namespace ProjetoLP3.Controle
             return preçoPadrão * listaFilmes.Count;
         }
 
-        public void gerarAluguel(List<Filme> listaFilmes, Usuario usuario)
+        public void gerarAluguel(List<Filme> listaFilmes, Usuario usuario, DateTime dataAtual)
         {
-            //Aqui vou gerar o aluguel
+            //Todo aluguel é pago
+            Aluguel novoAluguel = new Aluguel(dataAtual.ToString("dd/MM/yyyy_HH:mm:ss"),
+                data7Dias(dataAtual).ToString("dd/MM/yyyy_HH:mm:ss"),
+                Status.Pago,
+                listaFilmes);
+
+            //Verifica se usuario ja possui lista, adiciona OU cria e adiciona
+            if (usuario.ListaAlugueis == null)
+            {
+                usuario.ListaAlugueis = new List<Aluguel> { novoAluguel };
+            } else
+            {
+                usuario.ListaAlugueis.Add(novoAluguel);
+            }
         }
     }
 }

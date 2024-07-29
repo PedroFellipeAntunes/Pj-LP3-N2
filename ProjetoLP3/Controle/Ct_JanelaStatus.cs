@@ -19,7 +19,16 @@ namespace ProjetoLP3.Controle
                     return true; //Janela já está aberta
                 }
             }
+
             return false; //Janela não está aberta
+        }
+
+        public void fecharTudo()
+        {
+            while (Application.OpenForms.Count > 1)
+            {
+                Application.OpenForms[1].Close();
+            }
         }
     }
 }
