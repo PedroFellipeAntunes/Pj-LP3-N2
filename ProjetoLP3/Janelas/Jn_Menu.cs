@@ -8,6 +8,8 @@ namespace ProjetoLP3
 {
     public partial class Jn_Menu : Form
     {
+        private List<Filme> catalogoTodosFilmes = new List<Filme>();
+
         private Usuario usuario;
 
         private Ct_VisualJanela ct_Visual = new Ct_VisualJanela();
