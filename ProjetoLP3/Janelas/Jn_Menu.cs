@@ -8,7 +8,7 @@ namespace ProjetoLP3
 {
     public partial class Jn_Menu : Form
     {
-        private Usuario usuario;
+        public Usuario usuario; //Modificado para public não precisa passar por parametro
 
         private Ct_VisualJanela visual = new Ct_VisualJanela();
         private Ct_JanelaStatus status = new Ct_JanelaStatus();
