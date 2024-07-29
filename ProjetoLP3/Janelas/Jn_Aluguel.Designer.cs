@@ -46,6 +46,10 @@
             Lb_Pg = new Label();
             Lb_Preço = new Label();
             Bt_Alugar = new Button();
+            Tp_HelpReset = new ToolTip(components);
+            Tp_HelpRemover = new ToolTip(components);
+            Tp_Preço = new ToolTip(components);
+            Tp_DataFinal = new ToolTip(components);
             SuspendLayout();
             // 
             // Vw_Filmes
@@ -74,6 +78,7 @@
             Bt_Reset.Size = new Size(75, 23);
             Bt_Reset.TabIndex = 2;
             Bt_Reset.Text = "Reset";
+            Tp_HelpReset.SetToolTip(Bt_Reset, "Desfaz alterações a lista de filmes.");
             Bt_Reset.UseVisualStyleBackColor = true;
             Bt_Reset.Click += Bt_Reset_Click;
             // 
@@ -84,6 +89,7 @@
             Bt_Remover.Size = new Size(75, 23);
             Bt_Remover.TabIndex = 3;
             Bt_Remover.Text = "Remover";
+            Tp_HelpRemover.SetToolTip(Bt_Remover, "Remove filmes selecionados da lista.");
             Bt_Remover.UseVisualStyleBackColor = true;
             Bt_Remover.Click += Bt_Remover_Click;
             // 
@@ -110,6 +116,7 @@
             // 
             Mc_DataFinal.Location = new Point(340, 126);
             Mc_DataFinal.Name = "Mc_DataFinal";
+            Mc_DataFinal.ShowToday = false;
             Mc_DataFinal.TabIndex = 7;
             // 
             // Lb_3
@@ -121,6 +128,7 @@
             Lb_3.Size = new Size(71, 17);
             Lb_3.TabIndex = 8;
             Lb_3.Text = "Data Final";
+            Tp_DataFinal.SetToolTip(Lb_3, "Data final é exatamente 7 dias após a geração do aluguel.");
             // 
             // Tb_DataFinal
             // 
@@ -130,6 +138,7 @@
             Tb_DataFinal.Size = new Size(74, 23);
             Tb_DataFinal.TabIndex = 9;
             Tb_DataFinal.TextAlign = HorizontalAlignment.Center;
+            Tp_Preço.SetToolTip(Tb_DataFinal, "Data final é exatamente 7 dias após a geração do aluguel.");
             // 
             // Tb_HoraFinal
             // 
@@ -139,6 +148,7 @@
             Tb_HoraFinal.Size = new Size(74, 23);
             Tb_HoraFinal.TabIndex = 10;
             Tb_HoraFinal.TextAlign = HorizontalAlignment.Center;
+            Tp_Preço.SetToolTip(Tb_HoraFinal, "Data final é exatamente 7 dias após a geração do aluguel.");
             // 
             // Tb_HoraAtual
             // 
@@ -162,6 +172,7 @@
             Tb_Preço.Size = new Size(78, 23);
             Tb_Preço.TabIndex = 12;
             Tb_Preço.TextAlign = HorizontalAlignment.Center;
+            Tp_Preço.SetToolTip(Tb_Preço, "Taxa de R$ 5,30 por filme.");
             // 
             // Cb_Pagamento
             // 
@@ -191,6 +202,7 @@
             Lb_Preço.Size = new Size(42, 17);
             Lb_Preço.TabIndex = 15;
             Lb_Preço.Text = "Preço";
+            Tp_Preço.SetToolTip(Lb_Preço, "Taxa de R$ 5,30 por filme.");
             // 
             // Bt_Alugar
             // 
@@ -249,5 +261,9 @@
         private Label Lb_Pg;
         private Label Lb_Preço;
         private Button Bt_Alugar;
+        private ToolTip Tp_HelpReset;
+        private ToolTip Tp_HelpRemover;
+        private ToolTip Tp_Preço;
+        private ToolTip Tp_DataFinal;
     }
 }

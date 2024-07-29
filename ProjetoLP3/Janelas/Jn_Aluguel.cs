@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProjetoLP3.Janelas
 {
@@ -147,6 +148,13 @@ namespace ProjetoLP3.Janelas
         {
             Tb_HoraAtual.Text = DateTime.Now.ToString("HH:mm:ss");
             Tb_HoraFinal.Text = DateTime.Now.ToString("HH:mm:ss");
+
+            //Verifiquar se é meia-noite
+            if (DateTime.Now.TimeOfDay.Hours == 0 && DateTime.Now.TimeOfDay.Minutes == 0 && DateTime.Now.TimeOfDay.Seconds == 0)
+            {
+                loadDataAtual();
+                loadDataFinal();
+            }
         }
 
         //IGNORAR
