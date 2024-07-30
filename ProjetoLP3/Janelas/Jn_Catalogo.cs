@@ -20,8 +20,10 @@ namespace ProjetoLP3.Janelas
 
         //Variaveis locais
         private Usuario usuario;
-        private List<Filme> todosFilmes; //Todos os filmes que existem no catalogo
-        private List<Filme> filmesSelecionados = new List<Filme>(); //Filmes que seram escolhidos
+        //Todos os filmes que existem no catalogo
+        private List<Filme> todosFilmes;
+        //Filmes que serão escolhidos
+        private List<Filme> filmesSelecionados = new List<Filme>();
 
         public Jn_Catalogo(Form MDIpai, Usuario usuario, List<Filme> listaFilmes)
         {

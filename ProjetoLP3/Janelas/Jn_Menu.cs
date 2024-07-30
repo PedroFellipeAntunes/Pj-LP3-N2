@@ -34,9 +34,9 @@ namespace ProjetoLP3
                 return;
             }
 
-            List<Filme> lf = gerarListaTeste();
+            catalogoTodosFilmes = gerarListaTeste();
 
-            Jn_Catalogo jn_Catalogo = new Jn_Catalogo(this, this.usuario, lf);
+            Jn_Catalogo jn_Catalogo = new Jn_Catalogo(this, this.usuario, catalogoTodosFilmes);
             ct_Visual.janelaGrande(jn_Catalogo);
 
             //Evitar mostrar janela se ela foi fechada por erro
