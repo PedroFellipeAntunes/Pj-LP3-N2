@@ -28,7 +28,22 @@ namespace ProjetoLP3
 
         private void Bt_Catalogo_Click(object sender, EventArgs e)
         {
+            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            if (ct_Status.janelaAberta<Jn_Catalogo>())
+            {
+                return;
+            }
 
+            List<Filme> lf = gerarListaTeste();
+
+            Jn_Catalogo jn_Catalogo = new Jn_Catalogo(this, this.usuario, lf);
+            ct_Visual.janelaGrande(jn_Catalogo);
+
+            //Evitar mostrar janela se ela foi fechada por erro
+            if (!jn_Catalogo.IsDisposed)
+            {
+                jn_Catalogo.Show();
+            }
         }
 
         private void Bt_Conta_Click(object sender, EventArgs e)
@@ -62,6 +77,26 @@ namespace ProjetoLP3
                 return;
             }
 
+            List<Filme> lf = gerarListaTeste();
+
+            Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this, this.usuario, lf);
+            ct_Visual.janelaGrande(jn_Aluguel);
+
+            //Evitar mostrar janela se ela foi fechada por erro
+            if (!jn_Aluguel.IsDisposed)
+            {
+                jn_Aluguel.Show();
+            }
+        }
+
+        private void Bt_Fechar_Click(object sender, EventArgs e)
+        {
+            //Botão que fecha todas as janelas atuais exceto o Menu
+            ct_Status.fecharTudo();
+        }
+
+        private List<Filme> gerarListaTeste()
+        {
             //lista de generos genericos
             List<Genero> lg = new List<Genero>();
             lg.Add(Genero.Drama);
@@ -104,20 +139,7 @@ namespace ProjetoLP3
             lf.Add(f2);
             lf.Add(f3);
 
-            Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this, this.usuario, lf);
-            ct_Visual.janelaGrande(jn_Aluguel);
-
-            //Evitar mostrar janela se ela foi fechada por erro
-            if (!jn_Aluguel.IsDisposed)
-            {
-                jn_Aluguel.Show();
-            }
-        }
-
-        private void Bt_Fechar_Click(object sender, EventArgs e)
-        {
-            //Botão que fecha todas as janelas atuais exceto o Menu
-            ct_Status.fecharTudo();
+            return lf;
         }
     }
 }
