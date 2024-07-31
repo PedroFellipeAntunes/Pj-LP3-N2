@@ -2,18 +2,11 @@
 using ProjetoLP3.Dados;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-//teste 123 4568965
 namespace ProjetoLP3.Janelas
 {
+    //teste
     public partial class Jn_Catalogo : Form
     {
         //Objetos de classe
@@ -45,30 +38,82 @@ namespace ProjetoLP3.Janelas
 
         private void Jn_Catalogo_Load(object sender, EventArgs e)
         {
-            //Aqui tu vai fazer o codigo que carrega os elementos na janela
-            //USE uma outra classe de controle! não coloque tudo dentro de apenas esta classe
-            //Veja como eu fiz o meu codigo de ALUGUEL! eu uso uma classe Ct_Aluguel separada
+            inicializarFilmes();
+            // Adicionar evento de clique ao painel principal
+            Flp_Catalogo.MouseClick += new MouseEventHandler(Flp_Catalogo_MouseClick);
         }
 
-        //BOTÃO DE ALUGUEL
-        //Saindo da janela de catalogo pra janela de aluguel
-        //Usuario pode querer voltar pra janela de catalogo e continuar adicionando filmes!
+        // BOTÃO DE ALUGUEL
+        // Saindo da janela de catalogo pra janela de aluguel
+        // Usuario pode querer voltar pra janela de catalogo e continuar adicionando filmes!
         private void Bt_Carrinho_Click(object sender, EventArgs e)
         {
-            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            // Verificar se a janela já está aberta (USEM ESTE CÓDIGO, MUDAR APENAS O TIPO)
             if (ct_Status.janelaAberta<Jn_Aluguel>())
             {
                 return;
             }
 
             Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.MdiParent, this.usuario, filmesSelecionados);
-            //ct_Visual.janelaGrande(jn_Aluguel);
+            ct_Visual.janelaGrande(jn_Aluguel);
 
-            //Evitar mostrar janela se ela foi fechada por erro
+            // Evitar mostrar janela se ela foi fechada por erro
             if (!jn_Aluguel.IsDisposed)
             {
                 jn_Aluguel.Show();
             }
+        }
+
+        private void inicializarFilmes()
+        {
+            foreach (var Filme in todosFilmes)
+            {
+                Button btnFilme = new Button
+                {
+                    Text = Filme.Nome,
+                    Width = 100,
+                    Height = 100
+                };
+                Flp_Catalogo.Controls.Add(btnFilme);
+                btnFilme.Click += (s, e) =>
+                {
+                    adicionarButtons();
+                };
+            }
+        }
+
+        private void adicionarButtons()
+        {
+            btnVerdetalhes.Visible = true;
+            btnAdicionarCarrinho.Visible = true;
+            btnAdicionarCarrinho.Click += new EventHandler(btnAdicionarCarrinho_Click);
+        }
+
+        private void removerButtons()
+        {
+            btnVerdetalhes.Visible = false;
+            btnAdicionarCarrinho.Visible = false;
+            btnAdicionarCarrinho.Click -= new EventHandler(btnAdicionarCarrinho_Click);
+        }
+
+        private void btnAdicionarCarrinho_Click(object sender, EventArgs e)
+        {
+
+            MessageBox.Show("Filme adicionado ao carrinho.");
+        }
+
+        private void Flp_Catalogo_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Verificar se o clique foi fora dos botões
+            if (!btnVerdetalhes.Bounds.Contains(e.Location) && !btnAdicionarCarrinho.Bounds.Contains(e.Location))
+            {
+                removerButtons();
+            }
+        }
+
+        private void Flp_Catalogo_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
