@@ -72,6 +72,7 @@ namespace ProjetoLP3.Janelas
                         Clb_Genero.CheckedItems);
 
                     MessageBox.Show("Filme cadastrado.", "Sucesso", MessageBoxButtons.OK);
+                    this.Close();
                 } else
                 {
                     MessageBox.Show("Dados invalidos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

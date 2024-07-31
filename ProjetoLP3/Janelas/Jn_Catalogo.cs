@@ -20,6 +20,9 @@ namespace ProjetoLP3.Janelas
         //Filmes que serão escolhidos
         private List<Filme> filmesSelecionados = new List<Filme>();
 
+        //Filme atualmente escolhido da lista
+        private Filme filmeEscolhido;
+
         public Jn_Catalogo(Form MDIpai, Usuario usuario, List<Filme> listaFilmes)
         {
             this.MdiParent = MDIpai;
@@ -55,7 +58,7 @@ namespace ProjetoLP3.Janelas
             }
 
             Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.MdiParent, this.usuario, filmesSelecionados);
-            ct_Visual.janelaGrande(jn_Aluguel);
+            //ct_Visual.janelaGrande(jn_Aluguel);
 
             // Evitar mostrar janela se ela foi fechada por erro
             if (!jn_Aluguel.IsDisposed)
@@ -74,6 +77,19 @@ namespace ProjetoLP3.Janelas
                     Width = 100,
                     Height = 100
                 };
+                
+                //Se o filme não tiver imagem usar generica
+                if (Filme.Imagem != null)
+                {
+                    btnFilme.Image = Filme.Imagem;
+                }
+                else
+                {
+                    //Mudar este codigo aqui pra usar outra imagem
+                    //É preciso "cadastrar" a imagem anteriormente como parte dos recursos
+                    btnFilme.Image = Properties.Resources.iconFilme;
+                }
+
                 Flp_Catalogo.Controls.Add(btnFilme);
                 btnFilme.Click += (s, e) =>
                 {
@@ -98,7 +114,7 @@ namespace ProjetoLP3.Janelas
 
         private void btnAdicionarCarrinho_Click(object sender, EventArgs e)
         {
-
+            //Aqui tu vai ter um metodo que pega o filme atual e adiciona a lista de selecionados
             MessageBox.Show("Filme adicionado ao carrinho.");
         }
 
