@@ -206,7 +206,7 @@
             // 
             // Bt_Alugar
             // 
-            Bt_Alugar.Location = new Point(216, 300);
+            Bt_Alugar.Location = new Point(186, 262);
             Bt_Alugar.Name = "Bt_Alugar";
             Bt_Alugar.Size = new Size(148, 28);
             Bt_Alugar.TabIndex = 16;
@@ -218,7 +218,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(585, 339);
+            ClientSize = new Size(585, 306);
             Controls.Add(Bt_Alugar);
             Controls.Add(Lb_Preço);
             Controls.Add(Lb_Pg);
@@ -235,6 +235,9 @@
             Controls.Add(Bt_Reset);
             Controls.Add(Lb_1);
             Controls.Add(Vw_Filmes);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "Jn_Aluguel";
             Text = "Aluguel";
             Load += Jn_Aluguel_Load;

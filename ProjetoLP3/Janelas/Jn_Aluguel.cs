@@ -89,11 +89,18 @@ namespace ProjetoLP3.Janelas
         {
             if (this.usuario != null && listaFilmesNova.Count != 0)
             {
-                ct_Aluguel.gerarAluguel(listaFilmesNova, this.usuario, DateTime.Now);
+                if (ct_Aluguel.verificarIdade(usuario, listaFilmesNova))
+                {
+                    ct_Aluguel.gerarAluguel(listaFilmesNova, this.usuario, DateTime.Now);
 
-                //Confirmação para o usuario
-                MessageBox.Show("Aluguel gerado, aguardando pagamento", "Sucesso", MessageBoxButtons.OK);
-                this.Close();
+                    //Confirmação para o usuario
+                    MessageBox.Show("Aluguel gerado, aguardando pagamento", "Sucesso", MessageBoxButtons.OK);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Conta não pode alugar por restrição de idade.", "Restrição", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             } else
             {
                 MessageBox.Show("Requer pelo menos 1 (um) filme para efetuar aluguel.", "Lista vazia", MessageBoxButtons.OK, MessageBoxIcon.Information);

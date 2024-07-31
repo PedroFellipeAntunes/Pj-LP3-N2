@@ -12,6 +12,8 @@ namespace ProjetoLP3.Dados
         private int faixaEtaria;
         private bool status;
 
+        private Image imagem;
+
         private List<Pais> listaLocaisLiberados;
         private List<Genero> listaGenero;
 
@@ -29,6 +31,7 @@ namespace ProjetoLP3.Dados
         }
 
         //Get e Set
+        public Image Imagem { get { return imagem; } set { imagem = value; } }
         public int IdFilme { get { return idFilme; } set { idFilme = value; } }
         public string Nome { get { return nome; } set { nome = value; } }
         public string Descrição { get { return descrição; } set { descrição = value; } }

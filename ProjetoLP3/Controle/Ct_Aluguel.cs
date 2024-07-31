@@ -75,5 +75,17 @@ namespace ProjetoLP3.Controle
                 usuario.ListaAlugueis.Add(novoAluguel);
             }
         }
+
+        public bool verificarIdade(Usuario usuario, List<Filme> listaFilmes) {
+            foreach (var item in listaFilmes)
+            {
+                if (usuario.Idade < item.FaixaEtaria)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

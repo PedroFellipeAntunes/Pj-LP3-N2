@@ -34,10 +34,8 @@ namespace ProjetoLP3
                 return;
             }
 
-            catalogoTodosFilmes = gerarListaTeste();
-
             Jn_Catalogo jn_Catalogo = new Jn_Catalogo(this, this.usuario, catalogoTodosFilmes);
-            ct_Visual.janelaGrande(jn_Catalogo);
+            //ct_Visual.janelaGrande(jn_Catalogo);
 
             //Evitar mostrar janela se ela foi fechada por erro
             if (!jn_Catalogo.IsDisposed)
@@ -46,6 +44,7 @@ namespace ProjetoLP3
             }
         }
 
+        //DIOGO ALTERAR ESTE CODIGO PRA CHAMAR A TUA JANELA
         private void Bt_Conta_Click(object sender, EventArgs e)
         {
             MessageBox.Show(usuario.ToString(), "CONTA"); //Teste excluir dps
@@ -66,7 +65,20 @@ namespace ProjetoLP3
 
         private void Bt_CadastrarFilmes_Click(object sender, EventArgs e)
         {
+            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            if (ct_Status.janelaAberta<Jn_CadastroFilme>())
+            {
+                return;
+            }
 
+            Jn_CadastroFilme jn_CadastroFilme = new Jn_CadastroFilme(this, catalogoTodosFilmes);
+            //ct_Visual.janelaGrande(jn_CadastroFilme);
+
+            //Evitar mostrar janela se ela foi fechada por erro
+            if (!jn_CadastroFilme.IsDisposed)
+            {
+                jn_CadastroFilme.Show();
+            }
         }
         //codigo de teste, apagar este botao dps
         private void tstAluguelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,9 +90,10 @@ namespace ProjetoLP3
             }
 
             List<Filme> lf = gerarListaTeste();
+            lf.AddRange(catalogoTodosFilmes);
 
             Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this, this.usuario, lf);
-            ct_Visual.janelaGrande(jn_Aluguel);
+            //ct_Visual.janelaGrande(jn_Aluguel);
 
             //Evitar mostrar janela se ela foi fechada por erro
             if (!jn_Aluguel.IsDisposed)
@@ -95,6 +108,7 @@ namespace ProjetoLP3
             ct_Status.fecharTudo();
         }
 
+        //CODIGO QUE GERA FILMES PRA TESTE
         private List<Filme> gerarListaTeste()
         {
             //lista de generos genericos

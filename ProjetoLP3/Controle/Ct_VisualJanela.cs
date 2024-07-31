@@ -9,6 +9,7 @@ namespace ProjetoLP3.Controle
 {
     internal class Ct_VisualJanela
     {
+        //Não vamos mais usar este codigo de visual
         //Codigo que força a janela inteira no MDI pai
         public void janelaGrande(Form janela)
         {
