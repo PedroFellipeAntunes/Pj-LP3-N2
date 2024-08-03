@@ -1,5 +1,6 @@
 ﻿using ProjetoLP3.Controle;
 using ProjetoLP3.Dados;
+using ProjetoLP3.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -94,6 +95,7 @@ namespace ProjetoLP3.Janelas
                 else
                 {
                     btnFilme.Image = new Bitmap(Properties.Resources.iconFilme, new Size(100, 150)); // Ajustando o tamanho da imagem
+                   
                 }
 
                 Flp_Catalogo.Controls.Add(btnFilme);
@@ -102,6 +104,7 @@ namespace ProjetoLP3.Janelas
                     filmeEscolhido = Filme;
                     adicionarButtons();
                     mudarTextoLabel(Filme.Nome, Filme.Descrição);
+                    pboxFilme.Image = filmeEscolhido.Imagem;
                 };
             }
         }
@@ -144,6 +147,7 @@ namespace ProjetoLP3.Janelas
             // Verificar se o clique do cursor foi fora dos botões
             if (!btnVerdetalhes.Bounds.Contains(e.Location) && !btnAdicionarCarrinho.Bounds.Contains(e.Location))
             {
+                pboxFilme.Image = Resources.iconFilme;
                 removerButtons();
                 mudarTextoLabel("Selecione um filme", "");
             }

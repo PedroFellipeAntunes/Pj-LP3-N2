@@ -72,7 +72,6 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(label2);
             panel1.Controls.Add(lbdescricao);
             panel1.Controls.Add(btnVerdetalhes);
             panel1.Controls.Add(btnAdicionarCarrinho);
@@ -88,7 +87,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(-10, -11);
+            label2.Location = new Point(-10, 314);
             label2.Name = "label2";
             label2.Size = new Size(1605, 20);
             label2.TabIndex = 4;
@@ -97,7 +96,7 @@
             // lbdescricao
             // 
             lbdescricao.AutoSize = true;
-            lbdescricao.Location = new Point(166, 70);
+            lbdescricao.Location = new Point(166, 54);
             lbdescricao.Name = "lbdescricao";
             lbdescricao.Size = new Size(410, 20);
             lbdescricao.TabIndex = 5;
@@ -129,7 +128,7 @@
             // 
             lbSelecaoFilme.AutoSize = true;
             lbSelecaoFilme.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbSelecaoFilme.Location = new Point(166, 37);
+            lbSelecaoFilme.Location = new Point(166, 15);
             lbSelecaoFilme.Name = "lbSelecaoFilme";
             lbSelecaoFilme.Size = new Size(317, 28);
             lbSelecaoFilme.TabIndex = 1;
@@ -138,9 +137,9 @@
             // pboxFilme
             // 
             pboxFilme.Image = Properties.Resources.iconFilme;
-            pboxFilme.Location = new Point(12, 37);
+            pboxFilme.Location = new Point(31, 15);
             pboxFilme.Name = "pboxFilme";
-            pboxFilme.Size = new Size(133, 83);
+            pboxFilme.Size = new Size(50, 75);
             pboxFilme.SizeMode = PictureBoxSizeMode.Zoom;
             pboxFilme.TabIndex = 0;
             pboxFilme.TabStop = false;
@@ -150,6 +149,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(878, 496);
+            Controls.Add(label2);
             Controls.Add(panel1);
             Controls.Add(Bt_Carrinho);
             Controls.Add(label1);
