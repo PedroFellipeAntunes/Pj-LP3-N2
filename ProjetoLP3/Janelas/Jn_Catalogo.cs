@@ -64,13 +64,9 @@ namespace ProjetoLP3.Janelas
                 return;
             }
 
-            Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.MdiParent, this.usuario, filmesSelecionados);
-            //ct_Visual.janelaGrande(jn_Aluguel);
-
-            // Evitar mostrar janela se ela foi fechada por erro
-            if (!jn_Aluguel.IsDisposed)
+            using (Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.usuario, filmesSelecionados))
             {
-                jn_Aluguel.Show();
+                jn_Aluguel.ShowDialog();
             }
         }
 
