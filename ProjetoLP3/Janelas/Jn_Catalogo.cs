@@ -21,6 +21,7 @@ namespace ProjetoLP3.Janelas
         private List<Filme> todosFilmes;
         //Filmes que serão escolhidos
         private List<Filme> filmesSelecionados = new List<Filme>();
+        
 
         //Filme atualmente escolhido da lista
         private Filme filmeEscolhido;
@@ -51,6 +52,7 @@ namespace ProjetoLP3.Janelas
             {
                 //Inicializa os filmes que estão cadastrados
                 inicializarFilmes();
+                
                 // Adicionar evento de clique ao painel principal
                 Flp_Catalogo.MouseClick += new MouseEventHandler(Flp_Catalogo_MouseClick);
             }
@@ -59,6 +61,13 @@ namespace ProjetoLP3.Janelas
 
         private void Bt_Carrinho_Click(object sender, EventArgs e)
         {
+            // Verifica se há filmes selecionados no carrinho
+            if (filmesSelecionados.Count == 0)
+            {
+                // Exibe uma mensagem informando que o carrinho está vazio
+                MessageBox.Show("O carrinho está vazio. Adicione filmes ao carrinho antes de prosseguir.", "Carrinho Vazio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // Verificar se a janela já está aberta (USEM ESTE CÓDIGO, MUDAR APENAS O TIPO)
             if (ct_Status.janelaAberta<Jn_Aluguel>())
             {
@@ -134,13 +143,31 @@ namespace ProjetoLP3.Janelas
         {
             if (filmeEscolhido != null)
             {
-                // Adicionar o filme à lista de filmes selecionados
-                filmesSelecionados.Add(filmeEscolhido);
+                if (!filmesSelecionados.Contains(filmeEscolhido))
+                {
+                    // Adicionar o filme à lista de filmes selecionados
+                    filmesSelecionados.Add(filmeEscolhido);
 
-                // Exibir uma mensagem de confirmação
-                MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Atualizar a contagem de filmes selecionados
+                    AtualizarQuantidadeFilmes();
+
+                    // Exibir uma mensagem de confirmação
+                    MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // Exibir uma mensagem informando que o filme já está no carrinho
+                    MessageBox.Show(filmeEscolhido.Nome + " já está no carrinho.", "Filme Já Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
+
+        private void AtualizarQuantidadeFilmes()
+        {
+            int quantidadeFilmesSelecionados = filmesSelecionados.Count;
+            lbContadorCarrinho.Text = Convert.ToString(quantidadeFilmesSelecionados);
+        }
+
 
         private void Flp_Catalogo_MouseClick(object sender, MouseEventArgs e)
         {
@@ -183,5 +210,7 @@ namespace ProjetoLP3.Janelas
             MessageBox.Show(mensagem, "Detalhes do Filme", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
+
+
     }
 }

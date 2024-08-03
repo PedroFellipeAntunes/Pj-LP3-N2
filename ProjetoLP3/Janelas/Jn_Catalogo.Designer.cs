@@ -33,22 +33,28 @@
             label1 = new Label();
             Bt_Carrinho = new Button();
             panel1 = new Panel();
-            label2 = new Label();
+            lbLinha = new Label();
             lbdescricao = new Label();
             btnVerdetalhes = new Button();
             btnAdicionarCarrinho = new Button();
             lbSelecaoFilme = new Label();
             pboxFilme = new PictureBox();
+            lbFilmesDestaque = new Label();
+            pBoxCarrinho = new PictureBox();
+            lbContadorCarrinho = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pboxFilme).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pBoxCarrinho).BeginInit();
             SuspendLayout();
             // 
             // Flp_Catalogo
             // 
-            Flp_Catalogo.Location = new Point(11, 55);
+            Flp_Catalogo.AutoScroll = true;
+            Flp_Catalogo.FlowDirection = FlowDirection.TopDown;
+            Flp_Catalogo.Location = new Point(11, 66);
             Flp_Catalogo.Margin = new Padding(3, 4, 3, 4);
             Flp_Catalogo.Name = "Flp_Catalogo";
-            Flp_Catalogo.Size = new Size(854, 255);
+            Flp_Catalogo.Size = new Size(854, 266);
             Flp_Catalogo.TabIndex = 0;
             // 
             // label1
@@ -72,6 +78,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(lbLinha);
             panel1.Controls.Add(lbdescricao);
             panel1.Controls.Add(btnVerdetalhes);
             panel1.Controls.Add(btnAdicionarCarrinho);
@@ -84,19 +91,20 @@
             panel1.TabIndex = 3;
             panel1.Paint += panel1_Paint;
             // 
-            // label2
+            // lbLinha
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(-10, 314);
-            label2.Name = "label2";
-            label2.Size = new Size(1605, 20);
-            label2.TabIndex = 4;
-            label2.Text = resources.GetString("label2.Text");
+            lbLinha.AutoSize = true;
+            lbLinha.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbLinha.Location = new Point(-13, 0);
+            lbLinha.Name = "lbLinha";
+            lbLinha.Size = new Size(1635, 20);
+            lbLinha.TabIndex = 4;
+            lbLinha.Text = resources.GetString("lbLinha.Text");
             // 
             // lbdescricao
             // 
             lbdescricao.AutoSize = true;
-            lbdescricao.Location = new Point(166, 54);
+            lbdescricao.Location = new Point(81, 74);
             lbdescricao.Name = "lbdescricao";
             lbdescricao.Size = new Size(410, 20);
             lbdescricao.TabIndex = 5;
@@ -105,7 +113,7 @@
             // 
             // btnVerdetalhes
             // 
-            btnVerdetalhes.Location = new Point(658, 35);
+            btnVerdetalhes.Location = new Point(671, 59);
             btnVerdetalhes.Name = "btnVerdetalhes";
             btnVerdetalhes.Size = new Size(207, 29);
             btnVerdetalhes.TabIndex = 4;
@@ -116,7 +124,7 @@
             // 
             // btnAdicionarCarrinho
             // 
-            btnAdicionarCarrinho.Location = new Point(658, 70);
+            btnAdicionarCarrinho.Location = new Point(668, 94);
             btnAdicionarCarrinho.Name = "btnAdicionarCarrinho";
             btnAdicionarCarrinho.Size = new Size(207, 29);
             btnAdicionarCarrinho.TabIndex = 3;
@@ -128,7 +136,7 @@
             // 
             lbSelecaoFilme.AutoSize = true;
             lbSelecaoFilme.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbSelecaoFilme.Location = new Point(166, 15);
+            lbSelecaoFilme.Location = new Point(78, 36);
             lbSelecaoFilme.Name = "lbSelecaoFilme";
             lbSelecaoFilme.Size = new Size(317, 28);
             lbSelecaoFilme.TabIndex = 1;
@@ -137,19 +145,52 @@
             // pboxFilme
             // 
             pboxFilme.Image = Properties.Resources.iconFilme;
-            pboxFilme.Location = new Point(31, 15);
+            pboxFilme.Location = new Point(22, 35);
             pboxFilme.Name = "pboxFilme";
             pboxFilme.Size = new Size(50, 75);
             pboxFilme.SizeMode = PictureBoxSizeMode.Zoom;
             pboxFilme.TabIndex = 0;
             pboxFilme.TabStop = false;
             // 
+            // lbFilmesDestaque
+            // 
+            lbFilmesDestaque.AutoSize = true;
+            lbFilmesDestaque.Font = new Font("Segoe UI", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbFilmesDestaque.Location = new Point(11, 48);
+            lbFilmesDestaque.Name = "lbFilmesDestaque";
+            lbFilmesDestaque.Size = new Size(1659, 20);
+            lbFilmesDestaque.TabIndex = 4;
+            lbFilmesDestaque.Text = resources.GetString("lbFilmesDestaque.Text");
+            // 
+            // pBoxCarrinho
+            // 
+            pBoxCarrinho.Image = Properties.Resources.iconCarrinho;
+            pBoxCarrinho.Location = new Point(114, 13);
+            pBoxCarrinho.Name = "pBoxCarrinho";
+            pBoxCarrinho.Size = new Size(39, 31);
+            pBoxCarrinho.SizeMode = PictureBoxSizeMode.Zoom;
+            pBoxCarrinho.TabIndex = 5;
+            pBoxCarrinho.TabStop = false;
+            // 
+            // lbContadorCarrinho
+            // 
+            lbContadorCarrinho.AutoSize = true;
+            lbContadorCarrinho.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbContadorCarrinho.Location = new Point(129, 9);
+            lbContadorCarrinho.Name = "lbContadorCarrinho";
+            lbContadorCarrinho.Size = new Size(15, 17);
+            lbContadorCarrinho.TabIndex = 6;
+            lbContadorCarrinho.Text = "0";
+            // 
             // Jn_Catalogo
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(878, 496);
-            Controls.Add(label2);
+            Controls.Add(lbContadorCarrinho);
+            Controls.Add(pBoxCarrinho);
+            Controls.Add(lbFilmesDestaque);
             Controls.Add(panel1);
             Controls.Add(Bt_Carrinho);
             Controls.Add(label1);
@@ -161,6 +202,7 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pboxFilme).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pBoxCarrinho).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -176,6 +218,9 @@
         private Button btnAdicionarCarrinho;
         private Button btnVerdetalhes;
         private Label lbdescricao;
-        private Label label2;
+        private Label lbLinha;
+        private Label lbFilmesDestaque;
+        private PictureBox pBoxCarrinho;
+        private Label lbContadorCarrinho;
     }
 }
