@@ -20,7 +20,7 @@ namespace ProjetoLP3.Controle
             }
         }
 
-        public void adicionarFilmeAoCatalogo(List<Filme> catalogo, string nome, string descrição, int duração, int faixaEtaria, Image imagem, CheckedListBox.CheckedItemCollection paises, CheckedListBox.CheckedItemCollection generos)
+        public bool adicionarFilmeAoCatalogo(List<Filme> catalogo, string nome, string descrição, int duração, int faixaEtaria, Image imagem, CheckedListBox.CheckedItemCollection paises, CheckedListBox.CheckedItemCollection generos)
         {
             //Gera filme
             List<Pais> listaPais = converterParaLista<Pais>(paises);
@@ -34,6 +34,10 @@ namespace ProjetoLP3.Controle
                 listaPais,
                 listaGeneros);
 
+            //Gerar id para o filme (sempre maior do que 0)
+            novoFilme.IdFilme = gerarId(catalogo);
+
+            //Adicionar imagem se existir
             if (imagem != null)
             {
                 novoFilme.Imagem = imagem;
@@ -42,12 +46,48 @@ namespace ProjetoLP3.Controle
             //Adiciona ao catalogo OU gera catalogo e adiciona
             if (catalogo != null)
             {
-                catalogo.Add(novoFilme);
+                //Verificar se já existe filme com este id
+                if (!verificarExistenteID(catalogo, novoFilme))
+                {
+                    catalogo.Add(novoFilme);
+
+                    return true;
+                }
             }
             else
             {
                 catalogo = new List<Filme>() { novoFilme };
+
+                return true;
             }
+
+            //Gerou erro!
+            return false;
+        }
+
+        private bool verificarExistenteID(List<Filme> catalogo, Filme filme)
+        {
+            foreach (var atual in catalogo)
+            {
+                if (filme.IdFilme == atual.IdFilme)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private int gerarId(List<Filme> catalogo)
+        {
+            int id = 0;
+
+            foreach (var item in catalogo)
+            {
+                id = item.IdFilme;
+            }
+
+            return id + 1;
         }
 
         //Converter pra lista

@@ -177,7 +177,8 @@ namespace ProjetoLP3.Janelas
 
         private void btnVerdetalhes_Click(object sender, EventArgs e)
         {
-            string mensagem = $"Nome: {filmeEscolhido.Nome}\n\n" +
+            string mensagem = $"ID: {filmeEscolhido.IdFilme}\n\n" +
+                              $"Nome: {filmeEscolhido.Nome}\n\n" +
                               $"Descrição: {filmeEscolhido.Descrição}\n\n" +
                               $"Duração: {filmeEscolhido.Duração} segundos\n" +
                               $"Faixa Etária: {filmeEscolhido.FaixaEtaria}\n";

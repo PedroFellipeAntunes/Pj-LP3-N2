@@ -62,16 +62,23 @@ namespace ProjetoLP3.Janelas
                 if (int.TryParse(Mtb_Duração.Text, out int duracaoInt) &&
                     int.TryParse(Mtb_FaixaEtaria.Text, out int faixaEtariaInt))
                 {
-                    ct_CadastroFilme.adicionarFilmeAoCatalogo(todosFilmes,
+                    //Retorna false == erro ao adicionar filme
+                    if (ct_CadastroFilme.adicionarFilmeAoCatalogo(todosFilmes,
                         Tb_Nome.Text,
                         Tb_Descrição.Text,
                         duracaoInt,
                         faixaEtariaInt,
                         Pb_Foto.Image,
                         Clb_Pais.CheckedItems,
-                        Clb_Genero.CheckedItems);
+                        Clb_Genero.CheckedItems))
+                    {
+                        MessageBox.Show("Filme cadastrado.", "Sucesso", MessageBoxButtons.OK);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Aconteceu um erro ao cadastrar o filme novo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-                    MessageBox.Show("Filme cadastrado.", "Sucesso", MessageBoxButtons.OK);
                     this.Close();
                 } else
                 {
