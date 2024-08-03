@@ -113,7 +113,14 @@ namespace ProjetoLP3.Janelas
                     filmeEscolhido = Filme;
                     mostrarBotões();
                     mudarTextoLabel(Filme.Nome, Filme.Descrição);
-                    pboxFilme.Image = filmeEscolhido.Imagem;
+                    if (Filme.Imagem != null)
+                    {
+                        pboxFilme.Image = filmeEscolhido.Imagem;
+                    }
+                    else
+                    {
+                        pboxFilme.Image = Resources.iconFilme;
+                    }
                 };
             }
         }

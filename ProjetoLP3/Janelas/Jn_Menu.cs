@@ -63,7 +63,19 @@ namespace ProjetoLP3
 
         private void Bt_MeusFilmes_Click(object sender, EventArgs e)
         {
+            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            if (ct_Status.janelaAberta<Jn_MeusFilmes>())
+            {
+                return;
+            }
 
+            Jn_MeusFilmes jn_MeusFilmes = new Jn_MeusFilmes(this, usuario);
+
+            //Evitar mostrar janela se ela foi fechada por erro
+            if (!jn_MeusFilmes.IsDisposed)
+            {
+                jn_MeusFilmes.Show();
+            }
         }
 
         private void Bt_CadastrarFilmes_Click(object sender, EventArgs e)
