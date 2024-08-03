@@ -94,6 +94,7 @@
             Mtb_FaixaEtaria.Location = new Point(12, 211);
             Mtb_FaixaEtaria.Mask = "00";
             Mtb_FaixaEtaria.Name = "Mtb_FaixaEtaria";
+            Mtb_FaixaEtaria.PromptChar = ' ';
             Mtb_FaixaEtaria.Size = new Size(79, 23);
             Mtb_FaixaEtaria.TabIndex = 6;
             Mtb_FaixaEtaria.TextAlign = HorizontalAlignment.Right;
@@ -125,8 +126,9 @@
             // Mtb_Duração
             // 
             Mtb_Duração.Location = new Point(219, 211);
-            Mtb_Duração.Mask = "00000000000000";
+            Mtb_Duração.Mask = "000000";
             Mtb_Duração.Name = "Mtb_Duração";
+            Mtb_Duração.PromptChar = ' ';
             Mtb_Duração.Size = new Size(96, 23);
             Mtb_Duração.TabIndex = 9;
             Mtb_Duração.TextAlign = HorizontalAlignment.Right;

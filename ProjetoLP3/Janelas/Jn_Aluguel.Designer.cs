@@ -235,7 +235,7 @@
             Controls.Add(Bt_Reset);
             Controls.Add(Lb_1);
             Controls.Add(Vw_Filmes);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Jn_Aluguel";

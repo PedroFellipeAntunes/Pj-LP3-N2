@@ -44,17 +44,20 @@ namespace ProjetoLP3
             }
         }
 
-        //DIOGO ALTERAR ESTE CODIGO PRA CHAMAR A TUA JANELA
         private void Bt_Conta_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(usuario.ToString(), "CONTA"); //Teste excluir dps
-            //Teste excluir dps
-            if (usuario.ListaAlugueis != null)
+            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            if (ct_Status.janelaAberta<Jn_Conta>())
             {
-                foreach (Aluguel al in usuario.ListaAlugueis)
-                {
-                    MessageBox.Show(al.ToString(), "ALUGUEL"); //Teste excluir dps
-                }
+                return;
+            }
+
+            Jn_Conta jn_Conta = new Jn_Conta(this, usuario);
+
+            //Evitar mostrar janela se ela foi fechada por erro
+            if (!jn_Conta.IsDisposed)
+            {
+                jn_Conta.Show();
             }
         }
 
@@ -92,13 +95,9 @@ namespace ProjetoLP3
             List<Filme> lf = gerarListaTeste();
             lf.AddRange(catalogoTodosFilmes);
 
-            Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this, this.usuario, lf);
-            //ct_Visual.janelaGrande(jn_Aluguel);
-
-            //Evitar mostrar janela se ela foi fechada por erro
-            if (!jn_Aluguel.IsDisposed)
+            using (Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.usuario, lf))
             {
-                jn_Aluguel.Show();
+                jn_Aluguel.ShowDialog();
             }
         }
 

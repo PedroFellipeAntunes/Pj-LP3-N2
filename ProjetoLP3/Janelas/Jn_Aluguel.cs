@@ -22,14 +22,13 @@ namespace ProjetoLP3.Janelas
         private List<Filme> listaFilmesOriginal; //Backup para reset
         private List<Filme> listaFilmesNova;
 
-        public Jn_Aluguel(Form MDIpai, Usuario usuario, List<Filme> listaFilmes)
+        public Jn_Aluguel(Usuario usuario, List<Filme> listaFilmes)
         {
-            this.MdiParent = MDIpai;
             this.usuario = usuario;
             this.listaFilmesOriginal = listaFilmes;
             this.listaFilmesNova = new List<Filme>(listaFilmesOriginal);
 
-            if (this.MdiParent == null || this.usuario == null || listaFilmesOriginal == null)
+            if (this.usuario == null || listaFilmesOriginal == null)
             {
                 MessageBox.Show("Valor nulo em construtor de classe", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
