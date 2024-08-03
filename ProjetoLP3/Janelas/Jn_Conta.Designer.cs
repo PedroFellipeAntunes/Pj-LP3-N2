@@ -181,7 +181,6 @@
         }
 
         private PictureBox Pb_Usuario;
-        private Label lblEmail;
         private PictureBox Pb_PqIdade;
         private PictureBox Pb_PqEmail;
         private PictureBox Pb_PqUsuario;

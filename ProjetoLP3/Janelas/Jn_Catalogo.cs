@@ -21,7 +21,7 @@ namespace ProjetoLP3.Janelas
         private List<Filme> todosFilmes;
         //Filmes que serão escolhidos
         private List<Filme> filmesSelecionados = new List<Filme>();
-        
+
 
         //Filme atualmente escolhido da lista
         private Filme filmeEscolhido;
@@ -52,7 +52,7 @@ namespace ProjetoLP3.Janelas
             {
                 //Inicializa os filmes que estão cadastrados
                 inicializarFilmes();
-                
+
                 // Adicionar evento de clique ao painel principal
                 Flp_Catalogo.MouseClick += new MouseEventHandler(Flp_Catalogo_MouseClick);
             }
@@ -104,21 +104,22 @@ namespace ProjetoLP3.Janelas
                 else
                 {
                     btnFilme.Image = new Bitmap(Properties.Resources.iconFilme, new Size(100, 150)); // Ajustando o tamanho da imagem
-                   
+
                 }
 
                 Flp_Catalogo.Controls.Add(btnFilme);
                 btnFilme.Click += (s, e) =>
                 {
                     filmeEscolhido = Filme;
-                    adicionarButtons();
+                    mostrarBotões();
                     mudarTextoLabel(Filme.Nome, Filme.Descrição);
                     pboxFilme.Image = filmeEscolhido.Imagem;
                 };
             }
         }
 
-        private void adicionarButtons()
+        //Renomeio de metodos
+        private void mostrarBotões()
         {
             //Altera as propriedades do botões adicionar e ver detalhes
             btnVerdetalhes.Visible = true;
@@ -126,40 +127,14 @@ namespace ProjetoLP3.Janelas
             lbdescricao.MaximumSize = new Size(600, 0); // Limite de largura
             btnAdicionarCarrinho.Visible = true;
             lbdescricao.Visible = true;
-            btnAdicionarCarrinho.Click += new EventHandler(btnAdicionarCarrinho_Click);
-
         }
 
-        private void removerButtons()
+        private void esconderBotões()
         {
             //Altera as propriedades do botões adicionar e ver detalhes
             btnVerdetalhes.Visible = false;
             btnAdicionarCarrinho.Visible = false;
             lbdescricao.Visible = false;
-            btnAdicionarCarrinho.Click -= new EventHandler(btnAdicionarCarrinho_Click);
-        }
-
-        private void btnAdicionarCarrinho_Click(object sender, EventArgs e)
-        {
-            if (filmeEscolhido != null)
-            {
-                if (!filmesSelecionados.Contains(filmeEscolhido))
-                {
-                    // Adicionar o filme à lista de filmes selecionados
-                    filmesSelecionados.Add(filmeEscolhido);
-
-                    // Atualizar a contagem de filmes selecionados
-                    AtualizarQuantidadeFilmes();
-
-                    // Exibir uma mensagem de confirmação
-                    MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    // Exibir uma mensagem informando que o filme já está no carrinho
-                    MessageBox.Show(filmeEscolhido.Nome + " já está no carrinho.", "Filme Já Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
         }
 
         private void AtualizarQuantidadeFilmes()
@@ -175,7 +150,7 @@ namespace ProjetoLP3.Janelas
             if (!btnVerdetalhes.Bounds.Contains(e.Location) && !btnAdicionarCarrinho.Bounds.Contains(e.Location))
             {
                 pboxFilme.Image = Resources.iconFilme;
-                removerButtons();
+                esconderBotões();
                 mudarTextoLabel("Selecione um filme", "");
             }
         }
@@ -204,13 +179,34 @@ namespace ProjetoLP3.Janelas
         {
             string mensagem = $"Nome: {filmeEscolhido.Nome}\n\n" +
                               $"Descrição: {filmeEscolhido.Descrição}\n\n" +
-                              $"Duração: {filmeEscolhido.Duração} minutos\n" +
+                              $"Duração: {filmeEscolhido.Duração} segundos\n" +
                               $"Faixa Etária: {filmeEscolhido.FaixaEtaria}\n";
 
             MessageBox.Show(mensagem, "Detalhes do Filme", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
+        private void btnAdicionarCarrinho_Click(object sender, EventArgs e)
+        {
+            if (filmeEscolhido != null)
+            {
+                if (!filmesSelecionados.Contains(filmeEscolhido))
+                {
+                    // Adicionar o filme à lista de filmes selecionados
+                    filmesSelecionados.Add(filmeEscolhido);
 
+                    // Atualizar a contagem de filmes selecionados
+                    AtualizarQuantidadeFilmes();
+
+                    // Exibir uma mensagem de confirmação
+                    MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // Exibir uma mensagem informando que o filme já está no carrinho
+                    MessageBox.Show(filmeEscolhido.Nome + " já está no carrinho.", "Filme Já Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
     }
 }
