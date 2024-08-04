@@ -10,6 +10,27 @@ namespace ProjetoLP3.Controle
 {
     internal class Ct_CadastroFilme
     {
+        public void editarDadosFilme(Filme filme, string nome, string descrição, int duração, int faixaEtaria, Image imagem, CheckedListBox.CheckedItemCollection paises, CheckedListBox.CheckedItemCollection generos)
+        {
+            //Converter
+            List<Pais> listaPais = converterParaLista<Pais>(paises);
+            List<Genero> listaGeneros = converterParaLista<Genero>(generos);
+
+            //Editar
+            filme.Nome = nome;
+            filme.Descrição = descrição;
+            filme.Duração = duração;
+            filme.FaixaEtaria = faixaEtaria;
+            filme.ListaGenero = listaGeneros;
+            filme.ListaLocaisLiberados = listaPais;
+
+            //Adicionar imagem se existir
+            if (imagem != null)
+            {
+                filme.Imagem = imagem;
+            }
+        }
+
         public void adicionarElementosCheckList<Tenum>(CheckedListBox checkedBox) where Tenum : Enum
         {
             var valores = Enum.GetValues(typeof(Tenum));
@@ -17,6 +38,24 @@ namespace ProjetoLP3.Controle
             foreach (var item in valores)
             {
                 checkedBox.Items.Add(item);
+            }
+        }
+
+        //Metodo para marcar os itens do CheckedListBox com base na lista de enums
+        public void marcarItensExistentes<TEnum>(CheckedListBox checkedBox, List<TEnum> listaEnums) where TEnum : Enum
+        {
+            if (listaEnums == null)
+            {
+                return;
+            }
+
+            foreach (var enumValue in listaEnums)
+            {
+                //Verifica se o enumValue está presente nos itens do CheckedListBox
+                if (checkedBox.Items.Contains(enumValue))
+                {
+                    checkedBox.SetItemChecked(checkedBox.Items.IndexOf(enumValue), true);
+                }
             }
         }
 

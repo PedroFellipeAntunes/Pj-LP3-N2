@@ -39,7 +39,7 @@ namespace ProjetoLP3.Dados
         public int FaixaEtaria { get { return faixaEtaria; } set { faixaEtaria = value; } }
         public bool Status { get { return status; } set { status = value; } }
         public List<Pais> ListaLocaisLiberados { get { return listaLocaisLiberados; } set { listaLocaisLiberados = value; } }
-        public List<Genero> ListaGenero { get { return listaGenero; } set {  ListaGenero = value; } }
+        public List<Genero> ListaGenero { get { return listaGenero; } set { listaGenero = value; } }
 
         //To String
         public override string ToString()

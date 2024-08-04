@@ -27,6 +27,7 @@
             label1 = new Label();
             label2 = new Label();
             Bt_Cancelar = new Button();
+            Cb_Adm = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)Pb_Usuario).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pb_PqIdade).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pb_PqEmail).BeginInit();
@@ -149,11 +150,22 @@
             Bt_Cancelar.Text = "Cancelar";
             Bt_Cancelar.UseVisualStyleBackColor = true;
             Bt_Cancelar.Visible = false;
-            Bt_Cancelar.Click += this.Bt_Cancelar_Click;
+            Bt_Cancelar.Click += Bt_Cancelar_Click;
+            // 
+            // Cb_Adm
+            // 
+            Cb_Adm.AutoSize = true;
+            Cb_Adm.Location = new Point(322, 176);
+            Cb_Adm.Name = "Cb_Adm";
+            Cb_Adm.Size = new Size(15, 14);
+            Cb_Adm.TabIndex = 29;
+            Cb_Adm.UseVisualStyleBackColor = true;
+            Cb_Adm.CheckedChanged += Cb_Adm_CheckedChanged;
             // 
             // Jn_Conta
             // 
             ClientSize = new Size(538, 217);
+            Controls.Add(Cb_Adm);
             Controls.Add(Bt_Cancelar);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -192,5 +204,6 @@
         private Label label1;
         private Label label2;
         private Button Bt_Cancelar;
+        private CheckBox Cb_Adm;
     }
 }

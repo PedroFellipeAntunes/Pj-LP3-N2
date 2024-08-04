@@ -33,7 +33,6 @@
             Bt_MeusFilmes = new ToolStripMenuItem();
             Bt_CadastrarFilme = new ToolStripMenuItem();
             Bt_Conta = new ToolStripMenuItem();
-            tstAluguelToolStripMenuItem = new ToolStripMenuItem();
             Bt_Fechar = new ToolStripMenuItem();
             Ms_Menu.SuspendLayout();
             SuspendLayout();
@@ -41,7 +40,7 @@
             // Ms_Menu
             // 
             Ms_Menu.Dock = DockStyle.Left;
-            Ms_Menu.Items.AddRange(new ToolStripItem[] { Bt_Catalogo, Bt_MeusFilmes, Bt_CadastrarFilme, Bt_Conta, tstAluguelToolStripMenuItem, Bt_Fechar });
+            Ms_Menu.Items.AddRange(new ToolStripItem[] { Bt_Catalogo, Bt_MeusFilmes, Bt_CadastrarFilme, Bt_Conta, Bt_Fechar });
             Ms_Menu.Location = new Point(0, 0);
             Ms_Menu.Name = "Ms_Menu";
             Ms_Menu.Size = new Size(126, 360);
@@ -76,18 +75,11 @@
             Bt_Conta.Text = "Conta";
             Bt_Conta.Click += Bt_Conta_Click;
             // 
-            // tstAluguelToolStripMenuItem
-            // 
-            tstAluguelToolStripMenuItem.Name = "tstAluguelToolStripMenuItem";
-            tstAluguelToolStripMenuItem.Size = new Size(113, 19);
-            tstAluguelToolStripMenuItem.Text = "tst aluguel";
-            tstAluguelToolStripMenuItem.Click += tstAluguelToolStripMenuItem_Click;
-            // 
             // Bt_Fechar
             // 
             Bt_Fechar.Name = "Bt_Fechar";
             Bt_Fechar.Size = new Size(113, 19);
-            Bt_Fechar.Text = "FECHAR";
+            Bt_Fechar.Text = "Fechar Janelas";
             Bt_Fechar.Click += Bt_Fechar_Click;
             // 
             // Jn_Menu
@@ -114,7 +106,6 @@
         private ToolStripMenuItem Bt_Catalogo;
         private ToolStripMenuItem Bt_MeusFilmes;
         private ToolStripMenuItem Bt_CadastrarFilme;
-        private ToolStripMenuItem tstAluguelToolStripMenuItem;
         private ToolStripMenuItem Bt_Fechar;
     }
 }

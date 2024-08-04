@@ -19,14 +19,20 @@ namespace ProjetoLP3.Janelas
     {
         private Ct_CadastroFilme ct_CadastroFilme = new Ct_CadastroFilme();
 
+        private Filme filme;
         private List<Filme> todosFilmes;
 
-        public Jn_CadastroFilme(Form MDIpai, List<Filme> listaFilmes)
-        {
-            this.MdiParent = MDIpai;
-            this.todosFilmes = listaFilmes;
+        public bool filmeEditado = false;
+        public bool filmeDeleteado = false;
 
-            if (this.MdiParent == null || this.todosFilmes == null)
+        //Construtor complexo que já define um valor para filme
+        //Se filme não for nulo então esta sendo editado
+        public Jn_CadastroFilme(List<Filme> listaFilmes, Filme filme = null)
+        {
+            this.todosFilmes = listaFilmes;
+            this.filme = filme;
+
+            if (this.todosFilmes == null)
             {
                 MessageBox.Show("Valor nulo em construtor de classe", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
@@ -43,6 +49,9 @@ namespace ProjetoLP3.Janelas
 
             //LOAD PAIS CHECKBOX
             loadPaisCheckBox();
+
+            //LOAD BOTÕES
+            loadDataFilme();
         }
 
         private void Bt_Video_Click(object sender, EventArgs e)
@@ -62,35 +71,59 @@ namespace ProjetoLP3.Janelas
                 if (int.TryParse(Mtb_Duração.Text, out int duracaoInt) &&
                     int.TryParse(Mtb_FaixaEtaria.Text, out int faixaEtariaInt))
                 {
-                    //Retorna false == erro ao adicionar filme
-                    if (ct_CadastroFilme.adicionarFilmeAoCatalogo(todosFilmes,
-                        Tb_Nome.Text,
-                        Tb_Descrição.Text,
-                        duracaoInt,
-                        faixaEtariaInt,
-                        Pb_Foto.Image,
-                        Clb_Pais.CheckedItems,
-                        Clb_Genero.CheckedItems))
-                    {
-                        MessageBox.Show("Filme cadastrado.", "Sucesso", MessageBoxButtons.OK);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Aconteceu um erro ao cadastrar o filme novo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    cadastrarOuEditar(duracaoInt, faixaEtariaInt);
 
                     this.Close();
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Dados invalidos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-            } else
+            }
+            else
             {
                 MessageBox.Show("Dados faltando.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         //LOGICA
+        private void cadastrarOuEditar(int duracao, int faixa)
+        {
+            //Está sendo editado
+            if (filme != null)
+            {
+                ct_CadastroFilme.editarDadosFilme(filme,
+                    Tb_Nome.Text,
+                    Tb_Descrição.Text,
+                    duracao,
+                    faixa,
+                    Pb_Foto.Image,
+                    Clb_Pais.CheckedItems,
+                    Clb_Genero.CheckedItems);
+
+                MessageBox.Show("Filme Editado.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                filmeEditado = true;
+                return;
+            }
+
+            //Retorna false == erro ao adicionar filme
+            if (ct_CadastroFilme.adicionarFilmeAoCatalogo(todosFilmes,
+                Tb_Nome.Text,
+                Tb_Descrição.Text,
+                duracao,
+                faixa,
+                Pb_Foto.Image,
+                Clb_Pais.CheckedItems,
+                Clb_Genero.CheckedItems))
+            {
+                MessageBox.Show("Filme Cadastrado.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Aconteceu um erro ao cadastrar o filme novo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void Bt_Imagem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -117,6 +150,46 @@ namespace ProjetoLP3.Janelas
         private void loadPaisCheckBox()
         {
             ct_CadastroFilme.adicionarElementosCheckList<Pais>(Clb_Pais);
+        }
+
+        private void loadDataFilme()
+        {
+            //Se está editando ou não
+            if (filme != null)
+            {
+                Bt_Cadastrar.Text = "Editar filme";
+                Bt_Video.Text = "Editar Arquivo de Video";
+
+                ct_CadastroFilme.marcarItensExistentes<Pais>(Clb_Pais, filme.ListaLocaisLiberados);
+                ct_CadastroFilme.marcarItensExistentes<Genero>(Clb_Genero, filme.ListaGenero);
+
+                if (filme.Imagem != null)
+                {
+                    Pb_Foto.Image = filme.Imagem;
+                }
+
+                Tb_Nome.Text = filme.Nome;
+                Tb_Descrição.Text = filme.Descrição;
+
+                Mtb_FaixaEtaria.Text = "" + filme.FaixaEtaria;
+                Mtb_Duração.Text = "" + filme.Duração;
+
+                Bt_Apagar.Visible = true;
+
+                this.Text = "Editar Filme";
+            }
+        }
+
+        private void Bt_Apagar_Click(object sender, EventArgs e)
+        {
+            DialogResult resultado = MessageBox.Show("Você tem certeza que deseja apagar este filme?", "Apagar Filme", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (resultado.Equals(DialogResult.Yes))
+            {
+                todosFilmes.Remove(filme);
+                this.filmeDeleteado = true;
+                this.Close();
+            }
         }
     }
 }

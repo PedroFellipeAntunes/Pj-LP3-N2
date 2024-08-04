@@ -49,6 +49,7 @@
             Bt_Cadastrar = new Button();
             Bt_Video = new Button();
             Gb_InfoFilme = new GroupBox();
+            Bt_Apagar = new Button();
             ((System.ComponentModel.ISupportInitialize)Pb_Foto).BeginInit();
             Gb_InfoFilme.SuspendLayout();
             SuspendLayout();
@@ -219,6 +220,7 @@
             // 
             Gb_InfoFilme.AutoSize = true;
             Gb_InfoFilme.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            Gb_InfoFilme.Controls.Add(Bt_Apagar);
             Gb_InfoFilme.Controls.Add(Bt_Video);
             Gb_InfoFilme.Controls.Add(Bt_Cadastrar);
             Gb_InfoFilme.Dock = DockStyle.Bottom;
@@ -229,6 +231,17 @@
             Gb_InfoFilme.Size = new Size(749, 64);
             Gb_InfoFilme.TabIndex = 18;
             Gb_InfoFilme.TabStop = false;
+            // 
+            // Bt_Apagar
+            // 
+            Bt_Apagar.Location = new Point(617, 22);
+            Bt_Apagar.Name = "Bt_Apagar";
+            Bt_Apagar.Size = new Size(120, 23);
+            Bt_Apagar.TabIndex = 18;
+            Bt_Apagar.Text = "Apagar Filme";
+            Bt_Apagar.UseVisualStyleBackColor = true;
+            Bt_Apagar.Visible = false;
+            Bt_Apagar.Click += Bt_Apagar_Click;
             // 
             // Jn_CadastroFilme
             // 
@@ -250,7 +263,7 @@
             Controls.Add(Lb_2);
             Controls.Add(Tb_Nome);
             Controls.Add(Lb_1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Jn_CadastroFilme";
@@ -284,5 +297,6 @@
         private Button Bt_Cadastrar;
         private Button Bt_Video;
         private GroupBox Gb_InfoFilme;
+        private Button Bt_Apagar;
     }
 }

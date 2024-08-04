@@ -51,6 +51,8 @@ namespace ProjetoLP3.Janelas
             Tb_Email.ReadOnly = true;
             Tb_Nome.ReadOnly = true;
             Mtb_Idade.ReadOnly = true;
+
+            Cb_Adm.Checked = usuario.TipoConta;
         }
 
         //LOGICA
@@ -110,6 +112,13 @@ namespace ProjetoLP3.Janelas
 
                 editando = false; //Mudar estado
             }
+        }
+
+        private void Cb_Adm_CheckedChanged(object sender, EventArgs e)
+        {
+            usuario.TipoConta = Cb_Adm.Checked;
+            Jn_Menu form = (Jn_Menu) this.MdiParent;
+            form.mudarVisibilidade();
         }
     }
 }

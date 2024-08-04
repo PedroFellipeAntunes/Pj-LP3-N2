@@ -15,6 +15,8 @@ namespace ProjetoLP3.Janelas
 {
     public partial class Jn_MeusFilmes : Form
     {
+        //Classe de controle
+        private Ct_MeusFilmes ct_MeusFilmes = new Ct_MeusFilmes();
 
         private Usuario usuario;
         private List<Filme> filmesAlugados;
@@ -32,13 +34,16 @@ namespace ProjetoLP3.Janelas
                 return;
             }
 
-            //this.filmesAlugados = usuario.ListaAlugueis.Select(a => a.Filme).ToList();
             InitializeComponent();
         }
 
         private void Jn_MeusFilmes_Load(object sender, EventArgs e)
         {
-            if (filmesAlugados.Count == 0)
+            //Carregar os filmes alugados primeiro
+            filmesAlugados = ct_MeusFilmes.obterFilmesAlugados(usuario);
+
+            //Adicionar ao flowlayout
+            if (filmesAlugados == null)
             {
                 MessageBox.Show("Você não possui filmes alugados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

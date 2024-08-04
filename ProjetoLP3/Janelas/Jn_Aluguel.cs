@@ -19,6 +19,8 @@ namespace ProjetoLP3.Janelas
 
         private Usuario usuario;
 
+        public bool foiAlugado = false;
+
         private List<Filme> listaFilmesOriginal; //Backup para reset
         private List<Filme> listaFilmesNova;
 
@@ -94,6 +96,9 @@ namespace ProjetoLP3.Janelas
 
                     //Confirmação para o usuario
                     MessageBox.Show("Aluguel gerado, aguardando pagamento", "Sucesso", MessageBoxButtons.OK);
+
+                    this.foiAlugado = true; //Usado no retorno
+
                     this.Close();
                 }
                 else

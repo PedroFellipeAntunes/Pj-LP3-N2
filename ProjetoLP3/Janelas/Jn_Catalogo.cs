@@ -8,12 +8,18 @@ using System.Windows.Forms;
 
 namespace ProjetoLP3.Janelas
 {
-
     public partial class Jn_Catalogo : Form
     {
+        //Controlador de dados de catalogo
+        Ct_Catalogo ct_Catalogo = new Ct_Catalogo();
+
+        private int larguraBorda = 3;
+        private Color corBorda = Color.Teal;
+
         //Objetos de classe
         Ct_JanelaStatus ct_Status = new Ct_JanelaStatus();
         Ct_VisualJanela ct_Visual = new Ct_VisualJanela();
+        Ct_FormatarDados ct_Formatar = new Ct_FormatarDados();
 
         //Variaveis locais
         private Usuario usuario;
@@ -25,6 +31,9 @@ namespace ProjetoLP3.Janelas
 
         //Filme atualmente escolhido da lista
         private Filme filmeEscolhido;
+
+        //Botão do filme atual
+        private Button botaoEscolhido;
 
         public Jn_Catalogo(Form MDIpai, Usuario usuario, List<Filme> listaFilmes)
         {
@@ -58,7 +67,6 @@ namespace ProjetoLP3.Janelas
             }
         }
 
-
         private void Bt_Carrinho_Click(object sender, EventArgs e)
         {
             // Verifica se há filmes selecionados no carrinho
@@ -77,13 +85,41 @@ namespace ProjetoLP3.Janelas
             using (Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.usuario, filmesSelecionados))
             {
                 jn_Aluguel.ShowDialog();
+
+                //Se foi alugado reseta o flow e a lista de filmes alugados
+                if (jn_Aluguel.foiAlugado)
+                {
+                    filmeEscolhido = null;
+                    esconderBotões();
+                    filmesSelecionados.Clear();
+                    pboxFilme.Image = Resources.iconFilme;
+                    mudarTextoLabel(null);
+                    AtualizarQuantidadeFilmes();
+                    inicializarFilmes();
+                }
             }
         }
 
         private void inicializarFilmes()
         {
+            //Ao iniciar vamos limpar a lista de filmes
+            Flp_Catalogo.Controls.Clear();
+
+            //Agora adicionar os botoes
             foreach (var Filme in todosFilmes)
             {
+                //Se o usuario ja tem o filme, pular este filme
+                if (ct_Catalogo.verificarUsuarioTemFilme(usuario, Filme))
+                {
+                    continue; //Isto vai pular esta etapa do loop
+                }
+
+                //Se o filme não possui o nome correto
+                if (!ct_Catalogo.contemNomeFilme(Filme, Tb_pesquisar.Text))
+                {
+                    continue;
+                }
+
                 //Configuração de design do Button
                 Button btnFilme = new Button
                 {
@@ -92,27 +128,33 @@ namespace ProjetoLP3.Janelas
                     Height = 150,
                     TextAlign = ContentAlignment.BottomCenter, // Alinhando o texto na parte inferior do botão
                     ImageAlign = ContentAlignment.MiddleCenter // Alinhando a imagem no centro do botão
-
                 };
+
+                //Se o botao ta na lista pro carrinho faz ele ter um visual diferente
+                if (filmesSelecionados.Contains(Filme))
+                {
+                    btnFilme.FlatStyle = FlatStyle.Flat;
+                    btnFilme.FlatAppearance.BorderSize = larguraBorda;
+                    btnFilme.FlatAppearance.BorderColor = corBorda;
+                }
 
                 //Se o filme não tiver imagem usar generica
                 if (Filme.Imagem != null)
                 {
-                    //btnFilme.Image = Filme.Imagem;
                     btnFilme.Image = new Bitmap(Filme.Imagem, new Size(100, 150)); // Ajustando o tamanho da imagem
                 }
                 else
                 {
                     btnFilme.Image = new Bitmap(Properties.Resources.iconFilme, new Size(100, 150)); // Ajustando o tamanho da imagem
-
                 }
 
-                Flp_Catalogo.Controls.Add(btnFilme);
                 btnFilme.Click += (s, e) =>
                 {
                     filmeEscolhido = Filme;
+                    botaoEscolhido = btnFilme; //Pra saber qual o botao atual
                     mostrarBotões();
-                    mudarTextoLabel(Filme.Nome, Filme.Descrição);
+                    mudarTextoLabel(Filme);
+
                     if (Filme.Imagem != null)
                     {
                         pboxFilme.Image = filmeEscolhido.Imagem;
@@ -122,6 +164,9 @@ namespace ProjetoLP3.Janelas
                         pboxFilme.Image = Resources.iconFilme;
                     }
                 };
+
+                //Aqui vai adicionar os botoes ao catalgo
+                Flp_Catalogo.Controls.Add(btnFilme);
             }
         }
 
@@ -129,19 +174,42 @@ namespace ProjetoLP3.Janelas
         private void mostrarBotões()
         {
             //Altera as propriedades do botões adicionar e ver detalhes
-            btnVerdetalhes.Visible = true;
-            lbdescricao.AutoSize = true;
-            lbdescricao.MaximumSize = new Size(600, 0); // Limite de largura
             btnAdicionarCarrinho.Visible = true;
+
+            if (filmeEscolhido != null)
+            {
+                if (filmesSelecionados.Contains(filmeEscolhido))
+                {
+                    btnAdicionarCarrinho.Text = "Remover do Carrinho";
+                }
+                else
+                {
+                    btnAdicionarCarrinho.Text = "Adicionar ao Carrinho";
+                }
+            }
+
             lbdescricao.Visible = true;
+            Lb_duracao.Visible = true;
+            Lb_etaria.Visible = true;
+
+            if (usuario.TipoConta)
+            {
+                Bt_Editar.Visible = true;
+            }
         }
 
         private void esconderBotões()
         {
             //Altera as propriedades do botões adicionar e ver detalhes
-            btnVerdetalhes.Visible = false;
             btnAdicionarCarrinho.Visible = false;
             lbdescricao.Visible = false;
+            Lb_duracao.Visible = false;
+            Lb_etaria.Visible = false;
+
+            if (usuario.TipoConta)
+            {
+                Bt_Editar.Visible = false;
+            }
         }
 
         private void AtualizarQuantidadeFilmes()
@@ -154,27 +222,31 @@ namespace ProjetoLP3.Janelas
         private void Flp_Catalogo_MouseClick(object sender, MouseEventArgs e)
         {
             // Verificar se o clique do cursor foi fora dos botões
-            if (!btnVerdetalhes.Bounds.Contains(e.Location) && !btnAdicionarCarrinho.Bounds.Contains(e.Location))
+            if (!btnAdicionarCarrinho.Bounds.Contains(e.Location))
             {
                 pboxFilme.Image = Resources.iconFilme;
+                filmeEscolhido = null;
                 esconderBotões();
-                mudarTextoLabel("Selecione um filme", "");
+                mudarTextoLabel(null);
             }
         }
 
-        private void mudarTextoLabel(String texto, String descricao)
+        private void mudarTextoLabel(Filme filme)
         {
-            if (filmeEscolhido != null && filmeEscolhido != null)
+            if (filme != null)
             {
-                lbSelecaoFilme.Text = texto;
-                lbdescricao.Text = descricao;
-
+                lbSelecaoFilme.Text = filme.Nome;
+                lbdescricao.Text = filme.Descrição;
+                Lb_etaria.Text = "" + filme.FaixaEtaria;
+                Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duração);
             }
-        }
-
-        private void Flp_Catalogo_Paint(object sender, PaintEventArgs e)
-        {
-
+            else
+            {
+                lbSelecaoFilme.Text = "Selecione um filme para aluguel";
+                lbdescricao.Text = "";
+                Lb_etaria.Text = "";
+                Lb_duracao.Text = "";
+            }
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -182,6 +254,7 @@ namespace ProjetoLP3.Janelas
 
         }
 
+        //Pode apagar este metodo
         private void btnVerdetalhes_Click(object sender, EventArgs e)
         {
             string mensagem = $"ID: {filmeEscolhido.IdFilme}\n\n" +
@@ -205,14 +278,77 @@ namespace ProjetoLP3.Janelas
 
                     // Atualizar a contagem de filmes selecionados
                     AtualizarQuantidadeFilmes();
+                    
+                    botaoEscolhido.FlatStyle = FlatStyle.Flat;
+                    botaoEscolhido.FlatAppearance.BorderSize = larguraBorda;
+                    botaoEscolhido.FlatAppearance.BorderColor = corBorda;
 
                     // Exibir uma mensagem de confirmação
                     MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
+                    botaoEscolhido.FlatStyle = FlatStyle.Standard;
+
+                    filmesSelecionados.Remove(filmeEscolhido);
+
+                    AtualizarQuantidadeFilmes();
+
+                    MessageBox.Show(filmeEscolhido.Nome + " foi removido do carrinho.", "Filme Removido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     // Exibir uma mensagem informando que o filme já está no carrinho
-                    MessageBox.Show(filmeEscolhido.Nome + " já está no carrinho.", "Filme Já Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show(filmeEscolhido.Nome + " já está no carrinho.", "Filme Já Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                mostrarBotões(); //Ao chamar isso de novo ele vai mudar o texto do botao
+            }
+        }
+
+        //Verifica toda vez que o texto mudar
+        private void Tb_pesquisar_TextChanged(object sender, EventArgs e)
+        {
+            inicializarFilmes();
+        }
+
+        private void Bt_Editar_Click(object sender, EventArgs e)
+        {
+            if (filmeEscolhido == null)
+            {
+                MessageBox.Show("Selecione 1 (um) filme para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            if (ct_Status.janelaAberta<Jn_CadastroFilme>())
+            {
+                return;
+            }
+
+            using (Jn_CadastroFilme jn_Editar = new Jn_CadastroFilme(todosFilmes, filmeEscolhido))
+            {
+                jn_Editar.ShowDialog();
+
+                //Pode ser que o filme deletado era parte dos filmes no carrinho
+                if (jn_Editar.filmeEditado)
+                {
+                    inicializarFilmes();
+
+                    if (filmeEscolhido.Imagem != null)
+                    {
+                        pboxFilme.Image = filmeEscolhido.Imagem;
+                    }
+
+                    mudarTextoLabel(filmeEscolhido);
+                }
+                else if (jn_Editar.filmeDeleteado)
+                {
+                    inicializarFilmes();
+
+                    pboxFilme.Image = Resources.iconFilme;
+                    esconderBotões();
+                    filmesSelecionados.Remove(filmeEscolhido);
+                    filmeEscolhido = null;
+                    mudarTextoLabel(null);
+                    AtualizarQuantidadeFilmes();
                 }
             }
         }

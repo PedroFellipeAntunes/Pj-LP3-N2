@@ -23,7 +23,11 @@ namespace ProjetoLP3
 
         private void Jn_Menu_Load(object sender, EventArgs e)
         {
-
+            //Se usuario não é ADM
+            if (usuario.TipoConta == false)
+            {
+                Bt_CadastrarFilme.Visible = false;
+            }
         }
 
         private void Bt_Catalogo_Click(object sender, EventArgs e)
@@ -61,6 +65,11 @@ namespace ProjetoLP3
             }
         }
 
+        public void mudarVisibilidade()
+        {
+            Bt_CadastrarFilme.Visible = usuario.TipoConta;
+        }
+
         private void Bt_MeusFilmes_Click(object sender, EventArgs e)
         {
             //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
@@ -86,30 +95,9 @@ namespace ProjetoLP3
                 return;
             }
 
-            Jn_CadastroFilme jn_CadastroFilme = new Jn_CadastroFilme(this, catalogoTodosFilmes);
-            //ct_Visual.janelaGrande(jn_CadastroFilme);
-
-            //Evitar mostrar janela se ela foi fechada por erro
-            if (!jn_CadastroFilme.IsDisposed)
+            using (Jn_CadastroFilme jn_CadastroFilme = new Jn_CadastroFilme(catalogoTodosFilmes))
             {
-                jn_CadastroFilme.Show();
-            }
-        }
-        //codigo de teste, apagar este botao dps
-        private void tstAluguelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
-            if (ct_Status.janelaAberta<Jn_Aluguel>())
-            {
-                return;
-            }
-
-            List<Filme> lf = gerarListaTeste();
-            lf.AddRange(catalogoTodosFilmes);
-
-            using (Jn_Aluguel jn_Aluguel = new Jn_Aluguel(this.usuario, lf))
-            {
-                jn_Aluguel.ShowDialog();
+                jn_CadastroFilme.ShowDialog();
             }
         }
 
