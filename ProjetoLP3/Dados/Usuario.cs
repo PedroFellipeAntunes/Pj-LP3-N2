@@ -18,6 +18,10 @@ namespace ProjetoLP3.Dados
 
         private List<Aluguel> listaAlugueis;
 
+        public Usuario()
+        {
+
+        }
         public Usuario(string nome, string senha, string email, int idade, bool tipoConta)
         {
             this.nome = nome;

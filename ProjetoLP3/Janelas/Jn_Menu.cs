@@ -48,15 +48,10 @@ namespace ProjetoLP3
 
         private void Bt_Conta_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(usuario.ToString(), "CONTA"); //Teste excluir dps
-            //Teste excluir dps
-            if (usuario.ListaAlugueis != null)
-            {
-                foreach (Aluguel al in usuario.ListaAlugueis)
-                {
-                    MessageBox.Show(al.ToString(), "ALUGUEL"); //Teste excluir dps
-                }
-            }
+            Conta conta = new Conta("diogo","diogo@aguiar",21,"2334", true);
+            conta.MdiParent = this;
+            conta.Show();
+
         }
 
         private void Bt_MeusFilmes_Click(object sender, EventArgs e)
