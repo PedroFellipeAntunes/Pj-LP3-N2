@@ -284,7 +284,7 @@ namespace ProjetoLP3.Janelas
                     botaoEscolhido.FlatAppearance.BorderColor = corBorda;
 
                     // Exibir uma mensagem de confirmação
-                    MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show(filmeEscolhido.Nome + " foi adicionado ao carrinho.", "Filme Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -294,7 +294,7 @@ namespace ProjetoLP3.Janelas
 
                     AtualizarQuantidadeFilmes();
 
-                    MessageBox.Show(filmeEscolhido.Nome + " foi removido do carrinho.", "Filme Removido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show(filmeEscolhido.Nome + " foi removido do carrinho.", "Filme Removido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     // Exibir uma mensagem informando que o filme já está no carrinho
                     //MessageBox.Show(filmeEscolhido.Nome + " já está no carrinho.", "Filme Já Adicionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

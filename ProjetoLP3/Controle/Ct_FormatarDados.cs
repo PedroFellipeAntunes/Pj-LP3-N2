@@ -17,5 +17,10 @@ namespace ProjetoLP3.Controle
 
             return $"{horas:D2}:{minutos:D2}"; //Formato "hh:mm"
         }
+
+        public string formatarDataHora(string data)
+        {
+            return data.Replace("_", " ");
+        }
     }
 }

@@ -63,8 +63,17 @@ namespace ProjetoLP3.Janelas
 
         private void ExibirFilmesAlugados()
         {
+            //Ao iniciar vamos limpar a lista de filmes
+            flp_meusFilmes.Controls.Clear();
+
             foreach (var filme in filmesAlugados)
             {
+                //Pular filme se não tem o nome
+                if (!ct_MeusFilmes.contemNomeFilme(filme, Tb_pesquisar.Text))
+                {
+                    continue;
+                }
+
                 // Configuração de design do Button
                 Button btnFilme = new Button
                 {
@@ -114,7 +123,7 @@ namespace ProjetoLP3.Janelas
             lbdescricao.Visible = true;
             Lb_duracao.Visible = true;
             Lb_etaria.Visible = true;
-
+            Lb_DataAluguel.Visible = true;
         }
 
         private void esconderBotões()
@@ -124,6 +133,7 @@ namespace ProjetoLP3.Janelas
             lbdescricao.Visible = false;
             Lb_duracao.Visible = false;
             Lb_etaria.Visible = false;
+            Lb_DataAluguel.Visible = false;
         }
 
         private void flp_meusFilmes_MouseClick(object sender, MouseEventArgs e)
@@ -147,6 +157,8 @@ namespace ProjetoLP3.Janelas
                 lbdescricao.Text = filme.Descrição;
                 Lb_etaria.Text = "" + filme.FaixaEtaria;
                 Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duração);
+                string dataHora = ct_MeusFilmes.retornarDataAluguelFilme(usuario, filme);
+                Lb_DataAluguel.Text = ct_Formatar.formatarDataHora(dataHora);
             }
             else
             {
@@ -155,6 +167,7 @@ namespace ProjetoLP3.Janelas
                 lbdescricao.Text = "";
                 Lb_etaria.Text = "";
                 Lb_duracao.Text = "";
+                Lb_DataAluguel.Text = "";
             }
         }
 
@@ -177,6 +190,12 @@ namespace ProjetoLP3.Janelas
         private void exibirConfirmaçãoAssistir(Filme filme)
         {
             MessageBox.Show($"Você está assistindo ao filme '{filme.Nome}'.", "Assistir", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Tb_pesquisar_TextChanged(object sender, EventArgs e)
+        {
+            //Verifica toda vez que o texto mudar
+            ExibirFilmesAlugados();
         }
     }
 }

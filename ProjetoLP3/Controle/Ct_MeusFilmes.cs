@@ -14,6 +14,19 @@ namespace ProjetoLP3.Controle
     internal class Ct_MeusFilmes
     {
         //Adicionar metodos de controle de dados nesta classe
+        public bool contemNomeFilme(Filme filme, string nome)
+        {
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                if (!filme.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public List<Filme> obterFilmesAlugados(Usuario usuario)
         {
             //Não tem alugueis
@@ -34,6 +47,22 @@ namespace ProjetoLP3.Controle
             }
 
             return filmesAtualmenteAlugados;
+        }
+
+        public string retornarDataAluguelFilme(Usuario usuario, Filme filme)
+        {
+            foreach (var aluguel in usuario.ListaAlugueis)
+            {
+                if (aluguel.Status.Equals(Status.Pago))
+                {
+                    if (aluguel.ListaFilmes.Contains(filme))
+                    {
+                        return aluguel.DataFinal;
+                    }
+                }
+            }
+
+            return "Erro";
         }
     }
 }
