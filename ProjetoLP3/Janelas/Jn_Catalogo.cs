@@ -76,6 +76,14 @@ namespace ProjetoLP3.Janelas
                 MessageBox.Show("O carrinho está vazio. Adicione filmes ao carrinho antes de prosseguir.", "Carrinho Vazio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            //Verifica se o usuario é cliente
+            if (usuario.TipoConta)
+            {
+                MessageBox.Show("Apenas CLIENTES podem alugar.", "Acesso negado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Verificar se a janela já está aberta (USEM ESTE CÓDIGO, MUDAR APENAS O TIPO)
             if (ct_Status.janelaAberta<Jn_Aluguel>())
             {
