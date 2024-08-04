@@ -11,6 +11,18 @@ using System.Threading.Tasks;
 
 namespace ProjetoLP3.Controle
 {
+    internal class ResultadoValidacao
+    {
+        public bool Sucesso { get; set; } = true;
+        public List<string> MensagensErro { get; set; } = new List<string>();
+
+        public void AdicionarErro(string mensagem)
+        {
+            Sucesso = true; //Tem que começar como true
+            MensagensErro.Add(mensagem);
+        }
+    }
+
     internal class Ct_Conta
     {
         public void atualizarConta(Usuario usuario, string nome, string email, string idade)
@@ -20,20 +32,31 @@ namespace ProjetoLP3.Controle
             usuario.Idade = stringParaInt(idade);
         }
 
-        public bool verificarValidez(string nome, string email, string idade)
+        public ResultadoValidacao verificarValidez(string nome, string email, string idade)
         {
+            var resultado = new ResultadoValidacao();
+
             //Verifica se os valores estão nulos ou vazios
             if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(idade))
             {
-                return false;
+                resultado.AdicionarErro("Campos não podem estar em branco.");
+                resultado.Sucesso = false;
+                return resultado;
             }
 
             if (!validarEmail(email))
             {
-                return false;
+                resultado.AdicionarErro("O formato do email é inválido.");
+                resultado.Sucesso = false;
             }
 
-            return true;
+            if (stringParaInt(idade) <= 0)
+            {
+                resultado.AdicionarErro("A idade deve ser maior que zero.");
+                resultado.Sucesso = false;
+            }
+
+            return resultado;
         }
 
         //Verificar se o e-mail é valido

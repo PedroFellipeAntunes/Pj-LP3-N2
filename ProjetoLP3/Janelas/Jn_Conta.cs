@@ -63,8 +63,10 @@ namespace ProjetoLP3.Janelas
             //Verificar se os dados são validos antes de salvar
             if (editando == false)
             {
+                ResultadoValidacao validacao = ct_Conta.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Mtb_Idade.Text);
+
                 //Tudo valido
-                if (ct_Conta.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Mtb_Idade.Text))
+                if (validacao.Sucesso)
                 {
                     ct_Conta.atualizarConta(usuario, Tb_Nome.Text, Tb_Email.Text, Mtb_Idade.Text);
 
@@ -72,7 +74,14 @@ namespace ProjetoLP3.Janelas
                 }
                 else
                 {
-                    MessageBox.Show("Dados não validos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    string erros = "";
+
+                    foreach (var erro in validacao.MensagensErro)
+                    {
+                        erros += "\n" + erro;
+                    }
+
+                    MessageBox.Show("Erros na validação:\n" + erros, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     loadDadosUsuario(); //não é valido então reseta
                 }
             }
