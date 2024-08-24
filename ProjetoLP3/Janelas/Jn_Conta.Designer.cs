@@ -21,13 +21,14 @@
             Pb_PqUsuario = new PictureBox();
             Bt_SalvarEditar = new Button();
             Tb_Nome = new TextBox();
-            Mtb_Idade = new MaskedTextBox();
             Tb_Email = new TextBox();
             Lb_1 = new Label();
             label1 = new Label();
             label2 = new Label();
             Bt_Cancelar = new Button();
             Cb_Adm = new CheckBox();
+            Lb_idadeTxt = new Label();
+            Dtp_Data = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)Pb_Usuario).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pb_PqIdade).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Pb_PqEmail).BeginInit();
@@ -78,7 +79,7 @@
             // 
             // Bt_SalvarEditar
             // 
-            Bt_SalvarEditar.Location = new Point(211, 170);
+            Bt_SalvarEditar.Location = new Point(432, 207);
             Bt_SalvarEditar.Name = "Bt_SalvarEditar";
             Bt_SalvarEditar.Size = new Size(94, 25);
             Bt_SalvarEditar.TabIndex = 20;
@@ -92,17 +93,6 @@
             Tb_Nome.Name = "Tb_Nome";
             Tb_Nome.Size = new Size(252, 23);
             Tb_Nome.TabIndex = 21;
-            // 
-            // Mtb_Idade
-            // 
-            Mtb_Idade.Location = new Point(53, 172);
-            Mtb_Idade.Mask = "00";
-            Mtb_Idade.Name = "Mtb_Idade";
-            Mtb_Idade.PromptChar = ' ';
-            Mtb_Idade.Size = new Size(47, 23);
-            Mtb_Idade.TabIndex = 23;
-            Mtb_Idade.TextAlign = HorizontalAlignment.Right;
-            Mtb_Idade.ValidatingType = typeof(int);
             // 
             // Tb_Email
             // 
@@ -143,7 +133,7 @@
             // 
             // Bt_Cancelar
             // 
-            Bt_Cancelar.Location = new Point(111, 170);
+            Bt_Cancelar.Location = new Point(332, 207);
             Bt_Cancelar.Name = "Bt_Cancelar";
             Bt_Cancelar.Size = new Size(94, 25);
             Bt_Cancelar.TabIndex = 28;
@@ -155,23 +145,43 @@
             // Cb_Adm
             // 
             Cb_Adm.AutoSize = true;
-            Cb_Adm.Location = new Point(322, 176);
+            Cb_Adm.Location = new Point(311, 213);
             Cb_Adm.Name = "Cb_Adm";
             Cb_Adm.Size = new Size(15, 14);
             Cb_Adm.TabIndex = 29;
             Cb_Adm.UseVisualStyleBackColor = true;
             Cb_Adm.CheckedChanged += Cb_Adm_CheckedChanged;
             // 
+            // Lb_idadeTxt
+            // 
+            Lb_idadeTxt.AutoSize = true;
+            Lb_idadeTxt.Location = new Point(53, 175);
+            Lb_idadeTxt.Name = "Lb_idadeTxt";
+            Lb_idadeTxt.Size = new Size(51, 15);
+            Lb_idadeTxt.TabIndex = 30;
+            Lb_idadeTxt.Text = "idadeTxt";
+            Lb_idadeTxt.TextAlign = ContentAlignment.MiddleCenter;
+            Lb_idadeTxt.Click += Lb_idadeTxt_Click;
+            // 
+            // Dtp_Data
+            // 
+            Dtp_Data.Location = new Point(110, 170);
+            Dtp_Data.Name = "Dtp_Data";
+            Dtp_Data.Size = new Size(195, 23);
+            Dtp_Data.TabIndex = 31;
+            Dtp_Data.ValueChanged += Dtp_Data_ValueChanged;
+            // 
             // Jn_Conta
             // 
-            ClientSize = new Size(538, 217);
+            ClientSize = new Size(538, 244);
+            Controls.Add(Dtp_Data);
+            Controls.Add(Lb_idadeTxt);
             Controls.Add(Cb_Adm);
             Controls.Add(Bt_Cancelar);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(Lb_1);
             Controls.Add(Tb_Email);
-            Controls.Add(Mtb_Idade);
             Controls.Add(Tb_Nome);
             Controls.Add(Bt_SalvarEditar);
             Controls.Add(Pb_PqUsuario);
@@ -198,12 +208,13 @@
         private PictureBox Pb_PqUsuario;
         private Button Bt_SalvarEditar;
         private TextBox Tb_Nome;
-        private MaskedTextBox Mtb_Idade;
         private TextBox Tb_Email;
         private Label Lb_1;
         private Label label1;
         private Label label2;
         private Button Bt_Cancelar;
         private CheckBox Cb_Adm;
+        private Label Lb_idadeTxt;
+        private DateTimePicker Dtp_Data;
     }
 }

@@ -79,7 +79,7 @@ namespace ProjetoLP3.Controle
         public bool verificarIdade(Usuario usuario, List<Filme> listaFilmes) {
             foreach (var item in listaFilmes)
             {
-                if (usuario.Idade < item.FaixaEtaria)
+                if (fd.ConverterDataParaIdade(usuario.Idade) < item.FaixaEtaria)
                 {
                     return false;
                 }

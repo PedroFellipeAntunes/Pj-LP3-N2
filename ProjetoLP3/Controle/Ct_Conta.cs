@@ -25,11 +25,13 @@ namespace ProjetoLP3.Controle
 
     internal class Ct_Conta
     {
+        Ct_FormatarDados fd = new Ct_FormatarDados();
+
         public void atualizarConta(Usuario usuario, string nome, string email, string idade)
         {
             usuario.Nome = nome;
             usuario.Email = email;
-            usuario.Idade = stringParaInt(idade);
+            usuario.Idade = idade;
         }
 
         public ResultadoValidacao verificarValidez(string nome, string email, string idade)
@@ -98,7 +100,7 @@ namespace ProjetoLP3.Controle
             }
         }
 
-        private int stringParaInt(string input)
+        public int stringParaInt(string input)
         {
             if (int.TryParse(input, out int result))
             {

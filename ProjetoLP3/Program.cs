@@ -23,7 +23,7 @@ namespace ProjetoLP3
                 "Daniela",
                 "123456",
                 "daniela@email.com",
-                25,
+                "2000-12-25",
                 true);
         }
     }

@@ -16,6 +16,7 @@ namespace ProjetoLP3.Janelas
     public partial class Jn_Conta : Form
     {
         private Ct_Conta ct_Conta = new Ct_Conta();
+        private Ct_FormatarDados fd = new Ct_FormatarDados();
 
         private Usuario usuario;
         private bool editando = false;
@@ -46,11 +47,16 @@ namespace ProjetoLP3.Janelas
         {
             Tb_Email.Text = usuario.Email;
             Tb_Nome.Text = usuario.Nome;
-            Mtb_Idade.Text = "" + usuario.Idade;
+            Lb_idadeTxt.Text = "" + fd.ConverterDataParaIdade(usuario.Idade);
+
+            Dtp_Data.Format = DateTimePickerFormat.Custom;
+            Dtp_Data.CustomFormat = "dd/MM/yyyy";
+
+            Dtp_Data.Value = DateTime.Parse(usuario.Idade);
 
             Tb_Email.ReadOnly = true;
             Tb_Nome.ReadOnly = true;
-            Mtb_Idade.ReadOnly = true;
+            Dtp_Data.Enabled = false;
 
             Cb_Adm.Checked = usuario.TipoConta;
         }
@@ -63,12 +69,12 @@ namespace ProjetoLP3.Janelas
             //Verificar se os dados são validos antes de salvar
             if (editando == false)
             {
-                ResultadoValidacao validacao = ct_Conta.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Mtb_Idade.Text);
+                ResultadoValidacao validacao = ct_Conta.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Lb_idadeTxt.Text);
 
                 //Tudo valido
                 if (validacao.Sucesso)
                 {
-                    ct_Conta.atualizarConta(usuario, Tb_Nome.Text, Tb_Email.Text, Mtb_Idade.Text);
+                    ct_Conta.atualizarConta(usuario, Tb_Nome.Text, Tb_Email.Text, fd.ConverterIdadeParaData(ct_Conta.stringParaInt(Lb_idadeTxt.Text)));
 
                     MessageBox.Show("Dados atualizados corretamente.", "Sucesso", MessageBoxButtons.OK);
                 }
@@ -102,7 +108,7 @@ namespace ProjetoLP3.Janelas
                 //Permitir edição
                 Tb_Email.ReadOnly = false;
                 Tb_Nome.ReadOnly = false;
-                Mtb_Idade.ReadOnly = false;
+                Dtp_Data.Enabled = true;
 
                 Bt_Cancelar.Visible = true;
 
@@ -115,7 +121,7 @@ namespace ProjetoLP3.Janelas
                 //Negar edição
                 Tb_Email.ReadOnly = true;
                 Tb_Nome.ReadOnly = true;
-                Mtb_Idade.ReadOnly = true;
+                Dtp_Data.Enabled = false;
 
                 Bt_Cancelar.Visible = false;
 
@@ -126,8 +132,20 @@ namespace ProjetoLP3.Janelas
         private void Cb_Adm_CheckedChanged(object sender, EventArgs e)
         {
             usuario.TipoConta = Cb_Adm.Checked;
-            Jn_Menu form = (Jn_Menu) this.MdiParent;
+            Jn_Menu form = (Jn_Menu)this.MdiParent;
             form.mudarVisibilidade();
+        }
+
+        private void Lb_idadeTxt_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Dtp_Data_ValueChanged(object sender, EventArgs e)
+        {
+            string dataFormatada = Dtp_Data.Value.ToString("yyyy/MM/dd");
+
+            Lb_idadeTxt.Text = "" + fd.ConverterDataParaIdade(dataFormatada);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace ProjetoLP3.Dados
         private string nome;
         private string senha;
         private string email;
-        private int idade;
+        private string idade; //Idade convertida para data de nascimento
         private bool tipoConta;
 
         private List<Aluguel> listaAlugueis;
 
-        public Usuario(string nome, string senha, string email, int idade, bool tipoConta)
+        public Usuario(string nome, string senha, string email, string idade, bool tipoConta)
         {
             this.nome = nome;
             this.senha = senha;
@@ -33,7 +33,7 @@ namespace ProjetoLP3.Dados
         public string Nome { get { return nome; } set { nome = value; } }
         public string Senha { get { return senha; } set { senha = value; } }
         public string Email { get { return email; } set { email = value; } }
-        public int Idade { get { return idade; } set { idade = value; } }
+        public string Idade { get { return idade; } set { idade = value; } }
         public bool TipoConta { get { return tipoConta; } set { tipoConta = value; } }
         public List<Aluguel> ListaAlugueis { get { return listaAlugueis; } set { listaAlugueis = value; } }
 
