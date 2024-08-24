@@ -23,4 +23,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Banco\Serviço\" />
+    <Folder Include="Banco\Repositorio\" />
+  </ItemGroup>
+
 </Project>

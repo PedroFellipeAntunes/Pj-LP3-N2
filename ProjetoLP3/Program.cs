@@ -1,4 +1,5 @@
 using ProjetoLP3.Dados;
+using ProjetoLP3.Janelas;
 
 namespace ProjetoLP3
 {
@@ -14,7 +15,8 @@ namespace ProjetoLP3
             // see https://aka.ms/applicationconfiguration.
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new Jn_Menu(CriarUsuarioGenerico()));
+            //Application.Run(new Jn_Menu(CriarUsuarioGenerico()));
+            Application.Run(new Jn_Login());
         }
 
         private static Dados.Usuario CriarUsuarioGenerico()
