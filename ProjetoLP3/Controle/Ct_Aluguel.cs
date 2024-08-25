@@ -1,4 +1,5 @@
-﻿using ProjetoLP3.Dados;
+﻿using ProjetoLP3.Banco.Serviço;
+using ProjetoLP3.Dados;
 using ProjetoLP3.Dados.Enum;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace ProjetoLP3.Controle
             return preçoPadrão * listaFilmes.Count;
         }
 
-        public void gerarAluguel(List<Filme> listaFilmes, Usuario usuario, DateTime dataAtual)
+        public async void gerarAluguel(List<Filme> listaFilmes, Usuario usuario, DateTime dataAtual)
         {
             //Todo aluguel é pago
             Aluguel novoAluguel = new Aluguel(dataAtual.ToString("dd/MM/yyyy_HH:mm:ss"),
@@ -66,6 +67,7 @@ namespace ProjetoLP3.Controle
                 Status.Pago,
                 listaFilmes);
 
+            //TODO: REMOVER LISTA LOCAL
             //Verifica se usuario ja possui lista, adiciona OU cria e adiciona
             if (usuario.ListaAlugueis == null)
             {
@@ -73,6 +75,29 @@ namespace ProjetoLP3.Controle
             } else
             {
                 usuario.ListaAlugueis.Add(novoAluguel);
+            }
+
+            // Conectar usuario e aluguel pelo id do usuario
+            novoAluguel.Usuario = usuario.Id;
+
+            await interfaceParaBDAsync(novoAluguel);
+        }
+
+        // Conecta a interface com o controlador de serviço
+        public async Task interfaceParaBDAsync(Aluguel aluguel)
+        {
+            try
+            {
+                // Chama o serviço de aluguel para cadastrar
+                var servico = new Sv_Aluguel();
+
+                // Faz cadastro
+                await servico.CadastrarNovoAluguelAsync(aluguel, aluguel.ListaFilmes);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao cadastrar aluguel: " + ex.Message);
             }
         }
 

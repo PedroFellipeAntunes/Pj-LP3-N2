@@ -20,6 +20,9 @@ namespace ProjetoLP3.Dados
         [BsonElement("status")]
         public Status Status { get; set; }
 
+        [BsonElement("id_usuario")]
+        public string Usuario { get; set; }
+
         [BsonIgnore] // Ignorar o campo ao salvar no MongoDB
         public List<Filme> ListaFilmes { get; set; }
 
