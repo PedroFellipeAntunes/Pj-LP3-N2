@@ -23,9 +23,6 @@ namespace ProjetoLP3.Dados
         [BsonIgnore] // Ignorar o campo ao salvar no MongoDB
         public List<Filme> ListaFilmes { get; set; }
 
-        [BsonElement("lista_filmes_id")]
-        public List<string> ListaFilmesID { get; set; }
-
         public Aluguel() { }
 
         public Aluguel(string dataInicial, string dataFinal, Status status, List<Filme> listaFilmes)
@@ -34,13 +31,6 @@ namespace ProjetoLP3.Dados
             DataFinal = dataFinal;
             Status = status;
             ListaFilmes = listaFilmes;
-
-            //Criar lista
-            ListaFilmesID = new List<string>();
-            foreach (var filme in listaFilmes)
-            {
-                ListaFilmesID.Add(filme.Id);
-            }
         }
 
         public override string ToString()

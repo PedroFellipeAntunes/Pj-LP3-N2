@@ -29,9 +29,6 @@ namespace ProjetoLP3.Dados
         [BsonIgnore] // Ignorar o campo ao salvar no MongoDB
         public List<Aluguel> ListaAlugueis { get; set; }
 
-        [BsonElement("lista_alugueis_id")]
-        public List<string> ListaAlgueisID { get; set; }
-
         public Usuario() { }
 
         public Usuario(string nome, string senha, string email, string idade, bool tipoConta)
@@ -42,7 +39,6 @@ namespace ProjetoLP3.Dados
             Idade = idade;
             TipoConta = tipoConta;
             ListaAlugueis = new List<Aluguel>();
-            ListaAlgueisID = new List<string>();
         }
 
         public override string ToString()

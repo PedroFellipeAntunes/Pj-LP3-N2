@@ -46,6 +46,7 @@
             Tp_Genero = new ToolTip(components);
             Tp_Pais = new ToolTip(components);
             Tp_Duração = new ToolTip(components);
+            Cb_Status = new CheckBox();
             Bt_Cadastrar = new Button();
             Bt_Video = new Button();
             Gb_InfoFilme = new GroupBox();
@@ -161,7 +162,7 @@
             Clb_Genero.FormattingEnabled = true;
             Clb_Genero.Location = new Point(481, 29);
             Clb_Genero.Name = "Clb_Genero";
-            Clb_Genero.Size = new Size(120, 220);
+            Clb_Genero.Size = new Size(143, 220);
             Clb_Genero.TabIndex = 12;
             Tp_Genero.SetToolTip(Clb_Genero, "Genero de filme");
             // 
@@ -180,7 +181,7 @@
             // 
             Lb_6.AutoSize = true;
             Lb_6.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Lb_6.Location = new Point(617, 9);
+            Lb_6.Location = new Point(630, 9);
             Lb_6.Name = "Lb_6";
             Lb_6.Size = new Size(33, 17);
             Lb_6.TabIndex = 14;
@@ -190,11 +191,23 @@
             // Clb_Pais
             // 
             Clb_Pais.FormattingEnabled = true;
-            Clb_Pais.Location = new Point(617, 29);
+            Clb_Pais.Location = new Point(630, 29);
             Clb_Pais.Name = "Clb_Pais";
-            Clb_Pais.Size = new Size(120, 220);
+            Clb_Pais.Size = new Size(141, 220);
             Clb_Pais.TabIndex = 15;
             Tp_Pais.SetToolTip(Clb_Pais, "País onde o filme é permitido");
+            // 
+            // Cb_Status
+            // 
+            Cb_Status.AutoSize = true;
+            Cb_Status.Location = new Point(336, 25);
+            Cb_Status.Name = "Cb_Status";
+            Cb_Status.Size = new Size(58, 19);
+            Cb_Status.TabIndex = 19;
+            Cb_Status.Text = "Status";
+            Cb_Status.TextAlign = ContentAlignment.MiddleCenter;
+            Tp_Duração.SetToolTip(Cb_Status, "Define se o filme está liberado para os clientes");
+            Cb_Status.UseVisualStyleBackColor = true;
             // 
             // Bt_Cadastrar
             // 
@@ -220,6 +233,7 @@
             // 
             Gb_InfoFilme.AutoSize = true;
             Gb_InfoFilme.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            Gb_InfoFilme.Controls.Add(Cb_Status);
             Gb_InfoFilme.Controls.Add(Bt_Apagar);
             Gb_InfoFilme.Controls.Add(Bt_Video);
             Gb_InfoFilme.Controls.Add(Bt_Cadastrar);
@@ -228,13 +242,13 @@
             Gb_InfoFilme.Margin = new Padding(0);
             Gb_InfoFilme.Name = "Gb_InfoFilme";
             Gb_InfoFilme.Padding = new Padding(0);
-            Gb_InfoFilme.Size = new Size(749, 64);
+            Gb_InfoFilme.Size = new Size(783, 64);
             Gb_InfoFilme.TabIndex = 18;
             Gb_InfoFilme.TabStop = false;
             // 
             // Bt_Apagar
             // 
-            Bt_Apagar.Location = new Point(617, 22);
+            Bt_Apagar.Location = new Point(651, 22);
             Bt_Apagar.Name = "Bt_Apagar";
             Bt_Apagar.Size = new Size(120, 23);
             Bt_Apagar.TabIndex = 18;
@@ -247,7 +261,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(749, 330);
+            ClientSize = new Size(783, 330);
             Controls.Add(Gb_InfoFilme);
             Controls.Add(Clb_Pais);
             Controls.Add(Lb_6);
@@ -271,6 +285,7 @@
             Load += Jn_CadastroFilme_Load;
             ((System.ComponentModel.ISupportInitialize)Pb_Foto).EndInit();
             Gb_InfoFilme.ResumeLayout(false);
+            Gb_InfoFilme.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -298,5 +313,6 @@
         private Button Bt_Video;
         private GroupBox Gb_InfoFilme;
         private Button Bt_Apagar;
+        private CheckBox Cb_Status;
     }
 }

@@ -50,6 +50,9 @@ namespace ProjetoLP3.Janelas
             //LOAD PAIS CHECKBOX
             loadPaisCheckBox();
 
+            //Checked
+            Cb_Status.Checked = true;
+
             //LOAD BOTÕES
             loadDataFilme();
         }
@@ -87,12 +90,13 @@ namespace ProjetoLP3.Janelas
         }
 
         //LOGICA
-        private void cadastrarOuEditar(int duracao, int faixa)
+        private async void cadastrarOuEditar(int duracao, int faixa)
         {
             //Está sendo editado
             if (filme != null)
             {
-                ct_CadastroFilme.editarDadosFilme(filme,
+                await ct_CadastroFilme.editarDadosFilme(filme,
+                    Cb_Status.Checked,
                     Tb_Nome.Text,
                     Tb_Descrição.Text,
                     duracao,
@@ -107,7 +111,8 @@ namespace ProjetoLP3.Janelas
             }
 
             //Retorna false == erro ao adicionar filme
-            if (ct_CadastroFilme.adicionarFilmeAoCatalogo(todosFilmes,
+            if (await ct_CadastroFilme.adicionarFilmeAoCatalogo(todosFilmes,
+                Cb_Status.Checked,
                 Tb_Nome.Text,
                 Tb_Descrição.Text,
                 duracao,
@@ -174,19 +179,25 @@ namespace ProjetoLP3.Janelas
                 Mtb_FaixaEtaria.Text = "" + filme.FaixaEtaria;
                 Mtb_Duração.Text = "" + filme.Duracao;
 
+                Cb_Status.Checked = filme.Status;
+
                 Bt_Apagar.Visible = true;
 
                 this.Text = "Editar Filme";
             }
         }
 
-        private void Bt_Apagar_Click(object sender, EventArgs e)
+        private async void Bt_Apagar_Click(object sender, EventArgs e)
         {
             DialogResult resultado = MessageBox.Show("Você tem certeza que deseja apagar este filme?", "Apagar Filme", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (resultado.Equals(DialogResult.Yes))
             {
                 todosFilmes.Remove(filme);
+
+                //apagar == 2
+                await ct_CadastroFilme.interfaceParaBDAsync(2, filme);
+
                 this.filmeDeleteado = true;
                 this.Close();
             }

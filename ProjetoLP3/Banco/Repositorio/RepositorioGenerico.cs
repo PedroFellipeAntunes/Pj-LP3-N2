@@ -47,10 +47,16 @@ public class RepositorioGenerico<T> where T : class
         return await _collection.Find(filter).ToListAsync();
     }
 
-    // Atualizar
+    // Atualizar um parametro
     public async Task UpdateAsync(FilterDefinition<T> filter, UpdateDefinition<T> update)
     {
-        await _collection.UpdateManyAsync(filter, update);
+        await _collection.UpdateOneAsync(filter, update);
+    }
+
+    // Atualizar o elemento por inteiro
+    public async Task UpdateAsync(FilterDefinition<T> filter, T updatedDocument)
+    {
+        await _collection.ReplaceOneAsync(filter, updatedDocument);
     }
 
     // Excluir
