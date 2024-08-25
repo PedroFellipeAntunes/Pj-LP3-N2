@@ -1,46 +1,48 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace ProjetoLP3.Dados
 {
     public class Usuario
     {
-        private int idUsuario;
-        private string nome;
-        private string senha;
-        private string email;
-        private string idade; //Idade convertida para data de nascimento
-        private bool tipoConta;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        private List<Aluguel> listaAlugueis;
+        [BsonElement("nome")]
+        public string Nome { get; set; }
+
+        [BsonElement("senha")]
+        public string Senha { get; set; }
+
+        [BsonElement("email")]
+        public string Email { get; set; }
+
+        [BsonElement("idade")]
+        public string Idade { get; set; }
+
+        [BsonElement("tipo_conta")]
+        public bool TipoConta { get; set; }
+
+        public List<Aluguel> ListaAlugueis { get; set; }
+
+        public Usuario() { }
 
         public Usuario(string nome, string senha, string email, string idade, bool tipoConta)
         {
-            this.nome = nome;
-            this.senha = senha;
-            this.email = email;
-            this.idade = idade;
-            this.tipoConta = tipoConta;
-            this.listaAlugueis = null;
+            Nome = nome;
+            Senha = senha;
+            Email = email;
+            Idade = idade;
+            TipoConta = tipoConta;
+            ListaAlugueis = new List<Aluguel>();
         }
 
-        //Get e Set
-        public int IdUsuario { get { return idUsuario; } set { idUsuario = value; } }
-        public string Nome { get { return nome; } set { nome = value; } }
-        public string Senha { get { return senha; } set { senha = value; } }
-        public string Email { get { return email; } set { email = value; } }
-        public string Idade { get { return idade; } set { idade = value; } }
-        public bool TipoConta { get { return tipoConta; } set { tipoConta = value; } }
-        public List<Aluguel> ListaAlugueis { get { return listaAlugueis; } set { listaAlugueis = value; } }
-
-        //To String
         public override string ToString()
         {
-            return $"Nome: {nome}, Email: {email}, Idade: {idade}";
+            return $"Nome: {Nome}, Email: {Email}, Idade: {Idade}";
         }
     }
 }

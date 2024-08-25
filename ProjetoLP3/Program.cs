@@ -1,3 +1,4 @@
+using ProjetoLP3.Banco.Serviço;
 using ProjetoLP3.Dados;
 using ProjetoLP3.Janelas;
 
@@ -16,6 +17,7 @@ namespace ProjetoLP3
 
             ApplicationConfiguration.Initialize();
             //Application.Run(new Jn_Menu(CriarUsuarioGenerico()));
+            
             Application.Run(new Jn_Login());
         }
 

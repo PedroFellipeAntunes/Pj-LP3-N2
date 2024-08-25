@@ -1,4 +1,5 @@
-﻿using ProjetoLP3.Dados;
+﻿using ProjetoLP3.Banco.Serviço;
+using ProjetoLP3.Dados;
 using ProjetoLP3.Dados.Enum;
 using ProjetoLP3.Janelas;
 using System;
@@ -72,6 +73,23 @@ namespace ProjetoLP3.Controle
             catch (RegexMatchTimeoutException)
             {
                 return false;
+            }
+        }
+
+        // Conecta a interface com o controlador de serviço
+        public async Task<Usuario> verificarValidezBDAsync(string email, string senha)
+        {
+            try
+            {
+                // Chama o serviço de usuário para buscar o usuário com email e senha fornecidos
+                var servico = new Sv_Usuario();
+
+                return await servico.BuscarUsuarioPorEmailESenhaAsync(email, senha);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao buscar usuário: " + ex.Message);
             }
         }
     }
