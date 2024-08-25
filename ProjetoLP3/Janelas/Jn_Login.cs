@@ -22,32 +22,44 @@ namespace ProjetoLP3.Janelas
             InitializeComponent();
         }
 
-        private void Bt_Login_Click(object sender, EventArgs e)
+        private async void Bt_Login_Click(object sender, EventArgs e)
         {
-            //Reusando o codigo para verificar validez apenas do email
-            ResultadoValidacao validacao = ct_Login.verificarValidez(Tb_Email.Text, Tb_Senha.Text);
-
-            if (validacao.Sucesso)
+            try
             {
-                //Pedir pro banco de dados o usuario
-                MessageBox.Show("Dados CORRETOS.", "Sucesso", MessageBoxButtons.OK);
-            }
-            else
-            {
-                string erros = "";
+                // Validar se o input do usuario é correto
+                ResultadoValidacao validacao = ct_Login.verificarValidez(Tb_Email.Text, Tb_Senha.Text);
 
-                foreach (var erro in validacao.MensagensErro)
+                if (validacao.Sucesso)
                 {
-                    erros += "\n" + erro;
-                }
+                    // Validar se o BD reconhece o usuario
+                    Usuario usuario = await ct_Login.verificarValidezBDAsync(Tb_Email.Text, Tb_Senha.Text);
 
-                MessageBox.Show("Erros na validação:\n" + erros, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    if (usuario != null)
+                    {
+                        // Usuário autenticado com sucesso
+                        MessageBox.Show("Usuário autenticado com sucesso!" + usuario.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuário ou senha inválidos.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+                else
+                {
+                    string erros = string.Join("\n", validacao.MensagensErro);
+                    MessageBox.Show("Erros na validação:\n" + erros, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Exibe a mensagem de erro ao usuário
+                MessageBox.Show($"Erro ao processar a solicitação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Bt_Cadastrar_Click(object sender, EventArgs e)
         {
-            //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
+            //Verificar se a janela já está aberta
             if (ct_Status.janelaAberta<Jn_CadastroUsuario>())
             {
                 return;
