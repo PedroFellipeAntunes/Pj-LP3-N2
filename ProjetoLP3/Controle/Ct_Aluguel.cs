@@ -19,7 +19,7 @@ namespace ProjetoLP3.Controle
             foreach (Filme filme in listaFilmes)
             {
                 ListViewItem novoItem = new ListViewItem(filme.Nome);
-                novoItem.SubItems.Add(fd.formatarHoraMinuto(filme.Duração));
+                novoItem.SubItems.Add(fd.formatarHoraMinuto(filme.Duracao));
                 novoItem.SubItems.Add("" + filme.FaixaEtaria);
 
                 listView.Items.Add(novoItem);

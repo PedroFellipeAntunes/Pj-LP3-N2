@@ -1,50 +1,57 @@
-﻿using ProjetoLP3.Dados.Enum;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using ProjetoLP3.Dados.Enum;
+using System.Collections.Generic;
+using System.Drawing; // Para o tipo Image
 
 namespace ProjetoLP3.Dados
 {
     public class Filme
     {
-        private int idFilme;
-        private string nome; //teste git
-        private string descrição;
-        private int duração; //Modificado de float para int, considerar isto como segundos
-        private int faixaEtaria;
-        private bool status;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        private Image imagem;
+        [BsonElement("nome")]
+        public string Nome { get; set; }
 
-        private List<Pais> listaLocaisLiberados;
-        private List<Genero> listaGenero;
+        [BsonElement("descricao")]
+        public string Descricao { get; set; }
 
-        //Aqui tbm teria o filme em MP4 ou WAV
+        [BsonElement("duracao")]
+        public int Duracao { get; set; } // Considerar como segundos
 
-        public Filme(string nome, string descrição, int duração, int faixaEtaria, bool status, List<Pais> listaLocaisLiberados, List<Genero> listaGenero)
+        [BsonElement("faixa_etaria")]
+        public int FaixaEtaria { get; set; }
+
+        [BsonElement("status")]
+        public bool Status { get; set; }
+
+        [BsonIgnore] // Ignorar o campo ao salvar no MongoDB
+        public Image Imagem { get; set; }
+
+        [BsonElement("locais_liberados")]
+        public List<Pais> ListaLocaisLiberados { get; set; }
+
+        [BsonElement("generos")]
+        public List<Genero> ListaGenero { get; set; }
+
+        public Filme() { }
+
+        public Filme(string nome, string descricao, int duracao, int faixaEtaria, bool status, List<Pais> listaLocaisLiberados, List<Genero> listaGenero)
         {
-            this.nome = nome;
-            this.descrição = descrição;
-            this.duração = duração;
-            this.faixaEtaria = faixaEtaria;
-            this.status = status;
-            this.listaLocaisLiberados = listaLocaisLiberados;
-            this.listaGenero = listaGenero;
+            Nome = nome;
+            Descricao = descricao;
+            Duracao = duracao;
+            FaixaEtaria = faixaEtaria;
+            Status = status;
+            ListaLocaisLiberados = listaLocaisLiberados;
+            ListaGenero = listaGenero;
         }
 
-        //Get e Set
-        public Image Imagem { get { return imagem; } set { imagem = value; } }
-        public int IdFilme { get { return idFilme; } set { idFilme = value; } }
-        public string Nome { get { return nome; } set { nome = value; } }
-        public string Descrição { get { return descrição; } set { descrição = value; } }
-        public int Duração { get { return duração; } set { duração = value; } }
-        public int FaixaEtaria { get { return faixaEtaria; } set { faixaEtaria = value; } }
-        public bool Status { get { return status; } set { status = value; } }
-        public List<Pais> ListaLocaisLiberados { get { return listaLocaisLiberados; } set { listaLocaisLiberados = value; } }
-        public List<Genero> ListaGenero { get { return listaGenero; } set { listaGenero = value; } }
-
-        //To String
         public override string ToString()
         {
-            return $"Nome: {nome}, Faixa Etaria: {faixaEtaria}, Duração: {duração}";
+            return $"Nome: {Nome}, Faixa Etária: {FaixaEtaria}, Duração: {Duracao}";
         }
     }
 }

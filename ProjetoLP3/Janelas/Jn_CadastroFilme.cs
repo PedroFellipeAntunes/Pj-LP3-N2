@@ -169,10 +169,10 @@ namespace ProjetoLP3.Janelas
                 }
 
                 Tb_Nome.Text = filme.Nome;
-                Tb_Descrição.Text = filme.Descrição;
+                Tb_Descrição.Text = filme.Descricao;
 
                 Mtb_FaixaEtaria.Text = "" + filme.FaixaEtaria;
-                Mtb_Duração.Text = "" + filme.Duração;
+                Mtb_Duração.Text = "" + filme.Duracao;
 
                 Bt_Apagar.Visible = true;
 

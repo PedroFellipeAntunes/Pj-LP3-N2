@@ -77,7 +77,7 @@ namespace ProjetoLP3.Controle
         }
 
         // Conecta a interface com o controlador de serviço
-        public async Task<Usuario> verificarValidezBDAsync(string email, string senha)
+        public async Task<Usuario> interfaceParaBDAsync(string email, string senha)
         {
             try
             {

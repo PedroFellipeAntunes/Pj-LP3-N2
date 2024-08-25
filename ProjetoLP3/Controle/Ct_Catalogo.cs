@@ -22,7 +22,7 @@ namespace ProjetoLP3.Controle
                 foreach (var filme in aluguel.ListaFilmes)
                 {
                     //Se o usuario possui um filme com o mesmo ID
-                    if (filme.IdFilme == filmeCatalogo.IdFilme)
+                    if (filme.Id.Equals(filmeCatalogo.Id))
                     {
                         return true;
                     }

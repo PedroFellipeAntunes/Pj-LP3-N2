@@ -1,35 +1,51 @@
-﻿using ProjetoLP3.Dados.Enum;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using ProjetoLP3.Dados.Enum;
+using System.Collections.Generic;
 
 namespace ProjetoLP3.Dados
 {
     public class Aluguel
     {
-        private int idAluguel;
-        private string dataInicial;
-        private string dataFinal;
-        private Status status;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        private List<Filme> listaFilmes;
+        [BsonElement("data_inicial")]
+        public string DataInicial { get; set; }
+
+        [BsonElement("data_final")]
+        public string DataFinal { get; set; }
+
+        [BsonElement("status")]
+        public Status Status { get; set; }
+
+        [BsonIgnore] // Ignorar o campo ao salvar no MongoDB
+        public List<Filme> ListaFilmes { get; set; }
+
+        [BsonElement("lista_filmes_id")]
+        public List<string> ListaFilmesID { get; set; }
+
+        public Aluguel() { }
 
         public Aluguel(string dataInicial, string dataFinal, Status status, List<Filme> listaFilmes)
         {
-            this.dataInicial = dataInicial;
-            this.dataFinal = dataFinal;
-            this.status = status;
-            this.listaFilmes = listaFilmes;
+            DataInicial = dataInicial;
+            DataFinal = dataFinal;
+            Status = status;
+            ListaFilmes = listaFilmes;
+
+            //Criar lista
+            ListaFilmesID = new List<string>();
+            foreach (var filme in listaFilmes)
+            {
+                ListaFilmesID.Add(filme.Id);
+            }
         }
 
-        public int IdAluguel { get { return idAluguel; } set { idAluguel = value; } }
-        public string DataInicial { get { return dataInicial; } set { dataInicial = value; } }
-        public string DataFinal { get { return dataFinal; } set {dataFinal = value; } }
-        public Status Status { get { return status; } set { status = value; } }
-        public List<Filme> ListaFilmes { get { return listaFilmes; } set { listaFilmes = value; } }
-
-        //To String
         public override string ToString()
         {
-            return $"DataInicial: {dataInicial}, DataFinal: {dataFinal}, Status: {status}, Quantidade de Filmes: {listaFilmes.Count}";
+            return $"Data Inicial: {DataInicial}, Data Final: {DataFinal}, Status: {Status}, Quantidade de Filmes: {ListaFilmes.Count}";
         }
     }
 }

@@ -16,19 +16,18 @@ namespace ProjetoLP3
             // see https://aka.ms/applicationconfiguration.
 
             ApplicationConfiguration.Initialize();
-            //Application.Run(new Jn_Menu(CriarUsuarioGenerico()));
-            
-            Application.Run(new Jn_Login());
-        }
 
-        private static Dados.Usuario CriarUsuarioGenerico()
-        {
-            return new Usuario(
-                "Daniela",
-                "123456",
-                "daniela@email.com",
-                "2000-12-25",
-                true);
+            // Cria a janela de login
+            using (Jn_Login loginForm = new Jn_Login())
+            {
+                // Exibe a janela de login e espera seu resultado
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Após o login ser bem-sucedido, cria e exibe a janela de menu
+                    Usuario usuario = loginForm.UsuarioAutenticado;
+                    Application.Run(new Jn_Menu(usuario));
+                }
+            }
         }
     }
 }

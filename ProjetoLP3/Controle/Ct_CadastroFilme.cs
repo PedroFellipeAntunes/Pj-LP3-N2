@@ -18,8 +18,8 @@ namespace ProjetoLP3.Controle
 
             //Editar
             filme.Nome = nome;
-            filme.Descrição = descrição;
-            filme.Duração = duração;
+            filme.Descricao = descrição;
+            filme.Duracao = duração;
             filme.FaixaEtaria = faixaEtaria;
             filme.ListaGenero = listaGeneros;
             filme.ListaLocaisLiberados = listaPais;
@@ -74,7 +74,7 @@ namespace ProjetoLP3.Controle
                 listaGeneros);
 
             //Gerar id para o filme (sempre maior do que 0)
-            novoFilme.IdFilme = gerarId(catalogo);
+            novoFilme.Id = "" + gerarId(catalogo);
 
             //Adicionar imagem se existir
             if (imagem != null)
@@ -108,7 +108,7 @@ namespace ProjetoLP3.Controle
         {
             foreach (var atual in catalogo)
             {
-                if (filme.IdFilme == atual.IdFilme)
+                if (filme.Id.Equals(atual.Id))
                 {
                     return true;
                 }
@@ -123,7 +123,7 @@ namespace ProjetoLP3.Controle
 
             foreach (var item in catalogo)
             {
-                id = item.IdFilme;
+                id = int.Parse(item.Id);
             }
 
             return id + 1;

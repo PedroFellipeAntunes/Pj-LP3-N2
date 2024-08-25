@@ -27,21 +27,31 @@ namespace ProjetoLP3.Janelas
             Dtp_Data.CustomFormat = "dd/MM/yyyy";
         }
 
-        private void Bt_Cadastrar_Click(object sender, EventArgs e)
+        private async void Bt_Cadastrar_Click(object sender, EventArgs e)
         {
             Ct_CadastroUsuario ct_CadastroUsuario = new Ct_CadastroUsuario();
 
             string dataFormatada = Dtp_Data.Value.ToString("yyyy/MM/dd");
 
-            dataFormatada = "" + fd.ConverterDataParaIdade(dataFormatada);
+            string idade = "" + fd.ConverterDataParaIdade(dataFormatada);
 
-            ResultadoValidacao validacao = ct_CadastroUsuario.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Tb_Senha.Text, dataFormatada);
+            ResultadoValidacao validacao = ct_CadastroUsuario.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Tb_Senha.Text, idade);
 
             //Tudo valido
             if (validacao.Sucesso)
             {
-                // Pedir ao bd para cadastrar conta
-                MessageBox.Show("Dados corretos.", "Sucesso", MessageBoxButtons.OK);
+                // Validar se o BD reconhece o usuario
+                bool retorno = await ct_CadastroUsuario.interfaceParaBDAsync(Tb_Email.Text, Tb_Senha.Text, Tb_Nome.Text, dataFormatada);
+
+                if (!retorno)
+                {
+                    // Usuário cadastrado com sucesso
+                    MessageBox.Show("Usuário cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("E-Mail já existente", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
             else
             {

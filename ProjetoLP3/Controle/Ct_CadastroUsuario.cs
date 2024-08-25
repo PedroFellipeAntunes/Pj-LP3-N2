@@ -1,4 +1,5 @@
-﻿using ProjetoLP3.Dados;
+﻿using ProjetoLP3.Banco.Serviço;
+using ProjetoLP3.Dados;
 using ProjetoLP3.Dados.Enum;
 using ProjetoLP3.Janelas;
 using System;
@@ -113,6 +114,36 @@ namespace ProjetoLP3.Controle
             {
                 //A conversão falhou, lançar uma exceção
                 throw new ArgumentException("A string não pode ser convertida para um valor inteiro.");
+            }
+        }
+
+        // Conecta a interface com o controlador de serviço
+        public async Task<bool> interfaceParaBDAsync(string email, string senha, string nome, string idade)
+        {
+            try
+            {
+                // Cria novo usuario
+                // Deve sempre ser false
+                Usuario usuario = new Usuario(nome, senha, email, idade, false);
+
+                // Chama o serviço de usuário para buscar o usuário com email e senha fornecidos
+                var servico = new Sv_Usuario();
+
+                // Verifica se o email já está cadastrado
+                if (await servico.VerificarEmailExistenteAsync(email))
+                {
+                    return true; // Usuário já existe
+                }
+
+                // Se o email não estiver cadastrado, realiza o cadastro
+                await servico.CadastrarNovoUsuarioAsync(usuario);
+
+                return false; // Cadastro realizado com sucesso
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao cadastrar usuário: " + ex.Message);
             }
         }
     }

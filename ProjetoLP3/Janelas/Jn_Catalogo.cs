@@ -244,9 +244,9 @@ namespace ProjetoLP3.Janelas
             if (filme != null)
             {
                 lbSelecaoFilme.Text = filme.Nome;
-                lbdescricao.Text = filme.Descrição;
+                lbdescricao.Text = filme.Descricao;
                 Lb_etaria.Text = "" + filme.FaixaEtaria;
-                Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duração);
+                Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duracao);
             }
             else
             {
@@ -265,10 +265,10 @@ namespace ProjetoLP3.Janelas
         //Pode apagar este metodo
         private void btnVerdetalhes_Click(object sender, EventArgs e)
         {
-            string mensagem = $"ID: {filmeEscolhido.IdFilme}\n\n" +
+            string mensagem = $"ID: {filmeEscolhido.Id}\n\n" +
                               $"Nome: {filmeEscolhido.Nome}\n\n" +
-                              $"Descrição: {filmeEscolhido.Descrição}\n\n" +
-                              $"Duração: {filmeEscolhido.Duração} segundos\n" +
+                              $"Descrição: {filmeEscolhido.Descricao}\n\n" +
+                              $"Duração: {filmeEscolhido.Duracao} segundos\n" +
                               $"Faixa Etária: {filmeEscolhido.FaixaEtaria}\n";
 
             MessageBox.Show(mensagem, "Detalhes do Filme", MessageBoxButtons.OK, MessageBoxIcon.Information);

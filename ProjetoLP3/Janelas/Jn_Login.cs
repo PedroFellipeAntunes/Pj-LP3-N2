@@ -17,6 +17,8 @@ namespace ProjetoLP3.Janelas
         private Ct_Login ct_Login = new Ct_Login();
         private Ct_JanelaStatus ct_Status = new Ct_JanelaStatus();
 
+        public Usuario UsuarioAutenticado { get; private set; }
+
         public Jn_Login()
         {
             InitializeComponent();
@@ -32,12 +34,16 @@ namespace ProjetoLP3.Janelas
                 if (validacao.Sucesso)
                 {
                     // Validar se o BD reconhece o usuario
-                    Usuario usuario = await ct_Login.verificarValidezBDAsync(Tb_Email.Text, Tb_Senha.Text);
+                    UsuarioAutenticado = await ct_Login.interfaceParaBDAsync(Tb_Email.Text, Tb_Senha.Text);
 
-                    if (usuario != null)
+                    if (UsuarioAutenticado != null)
                     {
                         // Usuário autenticado com sucesso
-                        MessageBox.Show("Usuário autenticado com sucesso!" + usuario.ToString());
+                        MessageBox.Show("Usuário autenticado com sucesso!");
+
+                        // Fechar a janela de login
+                        this.DialogResult = DialogResult.OK;
+                        this.Close(); // Fecha a janela de login
                     }
                     else
                     {
@@ -65,12 +71,9 @@ namespace ProjetoLP3.Janelas
                 return;
             }
 
-            Jn_CadastroUsuario jn_CadastroUsuario = new Jn_CadastroUsuario();
-
-            //Evitar mostrar janela se ela foi fechada por erro
-            if (!jn_CadastroUsuario.IsDisposed)
+            using (Jn_CadastroUsuario jn_CadastroUsuario = new Jn_CadastroUsuario())
             {
-                jn_CadastroUsuario.Show();
+                jn_CadastroUsuario.ShowDialog();
             }
         }
     }

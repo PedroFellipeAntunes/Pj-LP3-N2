@@ -154,9 +154,9 @@ namespace ProjetoLP3.Janelas
             if (filme != null)
             {
                 lbSelecaoFilme.Text = filme.Nome;
-                lbdescricao.Text = filme.Descrição;
+                lbdescricao.Text = filme.Descricao;
                 Lb_etaria.Text = "" + filme.FaixaEtaria;
-                Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duração);
+                Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duracao);
                 string dataHora = ct_MeusFilmes.retornarDataAluguelFilme(usuario, filme);
                 Lb_DataAluguel.Text = ct_Formatar.formatarDataHora(dataHora);
             }

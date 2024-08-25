@@ -26,7 +26,6 @@
             label1 = new Label();
             label2 = new Label();
             Bt_Cancelar = new Button();
-            Cb_Adm = new CheckBox();
             Lb_idadeTxt = new Label();
             Dtp_Data = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)Pb_Usuario).BeginInit();
@@ -142,16 +141,6 @@
             Bt_Cancelar.Visible = false;
             Bt_Cancelar.Click += Bt_Cancelar_Click;
             // 
-            // Cb_Adm
-            // 
-            Cb_Adm.AutoSize = true;
-            Cb_Adm.Location = new Point(311, 213);
-            Cb_Adm.Name = "Cb_Adm";
-            Cb_Adm.Size = new Size(15, 14);
-            Cb_Adm.TabIndex = 29;
-            Cb_Adm.UseVisualStyleBackColor = true;
-            Cb_Adm.CheckedChanged += Cb_Adm_CheckedChanged;
-            // 
             // Lb_idadeTxt
             // 
             Lb_idadeTxt.AutoSize = true;
@@ -176,7 +165,6 @@
             ClientSize = new Size(538, 244);
             Controls.Add(Dtp_Data);
             Controls.Add(Lb_idadeTxt);
-            Controls.Add(Cb_Adm);
             Controls.Add(Bt_Cancelar);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -213,7 +201,6 @@
         private Label label1;
         private Label label2;
         private Button Bt_Cancelar;
-        private CheckBox Cb_Adm;
         private Label Lb_idadeTxt;
         private DateTimePicker Dtp_Data;
     }
