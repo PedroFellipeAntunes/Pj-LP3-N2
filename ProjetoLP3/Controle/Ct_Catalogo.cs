@@ -16,10 +16,10 @@ namespace ProjetoLP3.Controle
             try
             {
                 // Chama o serviço de aluguel para cadastrar
-                var servico = new Sv_Catalogo();
+                var servico = new Sv_Filme();
 
                 // Faz pesquisa
-                return await servico.FilmesAlugadosAsync(true, usuario, filtro);
+                return await servico.ObterFilmesAsync(true, usuario, filtro);
             }
             catch (Exception ex)
             {
