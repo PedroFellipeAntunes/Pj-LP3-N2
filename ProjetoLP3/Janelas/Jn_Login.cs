@@ -1,4 +1,6 @@
-﻿using ProjetoLP3.Controle;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using ProjetoLP3.Controle;
 using ProjetoLP3.Dados;
 using System;
 using System.Collections.Generic;

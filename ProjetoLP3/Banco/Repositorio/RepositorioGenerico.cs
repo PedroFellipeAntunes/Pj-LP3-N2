@@ -5,15 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
+using ProjetoLP3.Dados;
+using System.Security.Cryptography.Xml;
 
 public class RepositorioGenerico<T> where T : class
 {
-    private readonly IMongoCollection<T> _collection;
+    private IMongoDatabase database;
+    private IMongoCollection<T> _collection;
 
     public RepositorioGenerico(string collectionName)
     {
         var mongoConnection = new Bd_Conexao(); // Conexão fixa
-        var database = mongoConnection.GetDatabase();
+        database = mongoConnection.GetDatabase();
+        _collection = database.GetCollection<T>(collectionName);
+    }
+
+    // Necessario para query complexas
+    public void ChangeCollection(string collectionName)
+    {
         _collection = database.GetCollection<T>(collectionName);
     }
 
@@ -29,7 +39,7 @@ public class RepositorioGenerico<T> where T : class
         await _collection.InsertManyAsync(documents);
     }
 
-    // Ler (Find)
+    // Retorna todos os elementos do tipo T (Find)
     public async Task<List<T>> GetAllAsync()
     {
         return await _collection.Find(Builders<T>.Filter.Empty).ToListAsync();
@@ -41,7 +51,7 @@ public class RepositorioGenerico<T> where T : class
         return await _collection.Find(filter).FirstOrDefaultAsync();
     }
 
-    // Ler com Filtro
+    // Retorna todos elementos do tipo T com filtro
     public async Task<List<T>> GetByFilterAsync(FilterDefinition<T> filter)
     {
         return await _collection.Find(filter).ToListAsync();
@@ -63,5 +73,13 @@ public class RepositorioGenerico<T> where T : class
     public async Task DeleteAsync(FilterDefinition<T> filter)
     {
         await _collection.DeleteManyAsync(filter);
+    }
+
+    // Requer tipo definitivo
+    public async Task<List<T>> AggregateAsync(PipelineDefinition<T, T> pipeline)
+    {
+        var cursor = await _collection.AggregateAsync(pipeline);
+
+        return await cursor.ToListAsync();
     }
 }

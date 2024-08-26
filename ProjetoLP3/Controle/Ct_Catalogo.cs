@@ -1,4 +1,5 @@
-﻿using ProjetoLP3.Dados;
+﻿using ProjetoLP3.Banco.Serviço;
+using ProjetoLP3.Dados;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,24 @@ namespace ProjetoLP3.Controle
 {
     internal class Ct_Catalogo
     {
+        // Conecta a interface com o controlador de serviço
+        public async Task<List<Filme>> interfaceParaBDAsync(Usuario usuario, string filtro)
+        {
+            try
+            {
+                // Chama o serviço de aluguel para cadastrar
+                var servico = new Sv_Catalogo();
+
+                // Faz pesquisa
+                return await servico.FilmesAlugadosAsync(true, usuario, filtro);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao encontrar filmes: " + ex.Message);
+            }
+        }
+
         public bool verificarUsuarioTemFilme(Usuario usuario, Filme filmeCatalogo)
         {
             //Usuario não tem aluguel

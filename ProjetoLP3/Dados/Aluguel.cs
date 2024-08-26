@@ -21,6 +21,7 @@ namespace ProjetoLP3.Dados
         public Status Status { get; set; }
 
         [BsonElement("id_usuario")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Usuario { get; set; }
 
         [BsonIgnore] // Ignorar o campo ao salvar no MongoDB
@@ -38,7 +39,7 @@ namespace ProjetoLP3.Dados
 
         public override string ToString()
         {
-            return $"Data Inicial: {DataInicial}, Data Final: {DataFinal}, Status: {Status}, Quantidade de Filmes: {ListaFilmes.Count}";
+            return $"Data Inicial: {DataInicial}, Data Final: {DataFinal}, Status: {Status}";
         }
     }
 }

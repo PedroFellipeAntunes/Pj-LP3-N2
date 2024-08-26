@@ -16,9 +16,11 @@ namespace ProjetoLP3.Banco.Serviço
         public string Id { get; set; }
 
         [BsonElement("id_aluguel")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string IdAluguel { get; set; }
 
         [BsonElement("id_filme")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string IdFilme { get; set; }
 
         public AluguelFilme() { }

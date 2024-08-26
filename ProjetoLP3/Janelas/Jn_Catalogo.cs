@@ -53,18 +53,18 @@ namespace ProjetoLP3.Janelas
 
         private void Jn_Catalogo_Load(object sender, EventArgs e)
         {
-            if (todosFilmes.Count == 0)
-            {
-                MessageBox.Show("Não há filmes cadastrados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
+            //if (todosFilmes.Count == 0)
+           // {
+            //    MessageBox.Show("Não há filmes cadastrados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           // }
+           // else
+           // {
                 //Inicializa os filmes que estão cadastrados
                 inicializarFilmes();
 
                 // Adicionar evento de clique ao painel principal
                 Flp_Catalogo.MouseClick += new MouseEventHandler(Flp_Catalogo_MouseClick);
-            }
+            //}
         }
 
         private void Bt_Carrinho_Click(object sender, EventArgs e)
@@ -109,25 +109,29 @@ namespace ProjetoLP3.Janelas
             }
         }
 
-        private void inicializarFilmes()
+        private async void inicializarFilmes()
         {
             //Ao iniciar vamos limpar a lista de filmes
             Flp_Catalogo.Controls.Clear();
 
+            //Pedir ao BD os filmes
+            todosFilmes = await ct_Catalogo.interfaceParaBDAsync(usuario, Tb_pesquisar.Text);
+
             //Agora adicionar os botoes
             foreach (var Filme in todosFilmes)
             {
+                //TODO: REMOVER
                 //Se o usuario ja tem o filme, pular este filme
-                if (ct_Catalogo.verificarUsuarioTemFilme(usuario, Filme))
-                {
-                    continue; //Isto vai pular esta etapa do loop
-                }
+                //if (ct_Catalogo.verificarUsuarioTemFilme(usuario, Filme))
+                //{
+                    //continue; //Isto vai pular esta etapa do loop
+                //}
 
                 //Se o filme não possui o nome correto
-                if (!ct_Catalogo.contemNomeFilme(Filme, Tb_pesquisar.Text))
-                {
-                    continue;
-                }
+                //if (!ct_Catalogo.contemNomeFilme(Filme, Tb_pesquisar.Text))
+                //{
+                    //continue;
+                //}
 
                 //Configuração de design do Button
                 Button btnFilme = new Button
@@ -260,19 +264,6 @@ namespace ProjetoLP3.Janelas
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
-        }
-
-        //Pode apagar este metodo
-        private void btnVerdetalhes_Click(object sender, EventArgs e)
-        {
-            string mensagem = $"ID: {filmeEscolhido.Id}\n\n" +
-                              $"Nome: {filmeEscolhido.Nome}\n\n" +
-                              $"Descrição: {filmeEscolhido.Descricao}\n\n" +
-                              $"Duração: {filmeEscolhido.Duracao} segundos\n" +
-                              $"Faixa Etária: {filmeEscolhido.FaixaEtaria}\n";
-
-            MessageBox.Show(mensagem, "Detalhes do Filme", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 

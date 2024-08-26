@@ -1,3 +1,4 @@
+using ProjetoLP3.Banco.Serviço;
 using ProjetoLP3.Controle;
 using ProjetoLP3.Dados;
 using ProjetoLP3.Dados.Enum;
@@ -30,7 +31,7 @@ namespace ProjetoLP3
             }
         }
 
-        private void Bt_Catalogo_Click(object sender, EventArgs e)
+        private async void Bt_Catalogo_Click(object sender, EventArgs e)
         {
             //Verificar se a janela já está aberta (USEM ESTE CODIGO, MUDAR APENAS O TIPO)
             if (ct_Status.janelaAberta<Jn_Catalogo>())
