@@ -67,7 +67,7 @@ namespace ProjetoLP3.Janelas
             //}
         }
 
-        private void Bt_Carrinho_Click(object sender, EventArgs e)
+        private async void Bt_Carrinho_Click(object sender, EventArgs e)
         {
             // Verifica se há filmes selecionados no carrinho
             if (filmesSelecionados.Count == 0)
@@ -77,13 +77,12 @@ namespace ProjetoLP3.Janelas
                 return;
             }
 
-            //TODO: Remover comentario!
             //Verifica se o usuario é cliente
-            //if (usuario.TipoConta)
-            //{
-                //MessageBox.Show("Apenas CLIENTES podem alugar.", "Acesso negado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //return;
-            //}
+            if (usuario.TipoConta)
+            {
+                MessageBox.Show("Apenas CLIENTES podem alugar.", "Acesso negado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Verificar se a janela já está aberta (USEM ESTE CÓDIGO, MUDAR APENAS O TIPO)
             if (ct_Status.janelaAberta<Jn_Aluguel>())
@@ -104,12 +103,12 @@ namespace ProjetoLP3.Janelas
                     pboxFilme.Image = Resources.iconFilme;
                     mudarTextoLabel(null);
                     AtualizarQuantidadeFilmes();
-                    inicializarFilmes();
+                    await inicializarFilmes();
                 }
             }
         }
 
-        private async void inicializarFilmes()
+        private async Task inicializarFilmes()
         {
             //Ao iniciar vamos limpar a lista de filmes
             Flp_Catalogo.Controls.Clear();
@@ -144,7 +143,7 @@ namespace ProjetoLP3.Janelas
                 };
 
                 //Se o botao ta na lista pro carrinho faz ele ter um visual diferente
-                if (filmesSelecionados.Contains(Filme))
+                if (filmesSelecionados.Any(f => f.Id == Filme.Id))
                 {
                     btnFilme.FlatStyle = FlatStyle.Flat;
                     btnFilme.FlatAppearance.BorderSize = larguraBorda;
@@ -191,7 +190,7 @@ namespace ProjetoLP3.Janelas
 
             if (filmeEscolhido != null)
             {
-                if (filmesSelecionados.Contains(filmeEscolhido))
+                if (filmesSelecionados.Any(f => f.Id == filmeEscolhido.Id))
                 {
                     btnAdicionarCarrinho.Text = "Remover do Carrinho";
                 }
@@ -271,7 +270,7 @@ namespace ProjetoLP3.Janelas
         {
             if (filmeEscolhido != null)
             {
-                if (!filmesSelecionados.Contains(filmeEscolhido))
+                if (!filmesSelecionados.Any(f => f.Id == filmeEscolhido.Id))
                 {
                     // Adicionar o filme à lista de filmes selecionados
                     filmesSelecionados.Add(filmeEscolhido);
@@ -290,7 +289,8 @@ namespace ProjetoLP3.Janelas
                 {
                     botaoEscolhido.FlatStyle = FlatStyle.Standard;
 
-                    filmesSelecionados.Remove(filmeEscolhido);
+                    // Remover o filme da lista de filmes selecionados com base no ID
+                    filmesSelecionados.RemoveAll(f => f.Id == filmeEscolhido.Id);
 
                     AtualizarQuantidadeFilmes();
 
@@ -304,12 +304,12 @@ namespace ProjetoLP3.Janelas
         }
 
         //Verifica toda vez que o texto mudar
-        private void Tb_pesquisar_TextChanged(object sender, EventArgs e)
+        private async void Tb_pesquisar_TextChanged(object sender, EventArgs e)
         {
-            inicializarFilmes();
+            await inicializarFilmes();
         }
 
-        private void Bt_Editar_Click(object sender, EventArgs e)
+        private async void Bt_Editar_Click(object sender, EventArgs e)
         {
             if (filmeEscolhido == null)
             {
@@ -330,7 +330,7 @@ namespace ProjetoLP3.Janelas
                 //Pode ser que o filme deletado era parte dos filmes no carrinho
                 if (jn_Editar.filmeEditado)
                 {
-                    inicializarFilmes();
+                    await inicializarFilmes();
 
                     if (filmeEscolhido.Imagem != null)
                     {
@@ -341,11 +341,12 @@ namespace ProjetoLP3.Janelas
                 }
                 else if (jn_Editar.filmeDeleteado)
                 {
-                    inicializarFilmes();
+                    await inicializarFilmes();
 
                     pboxFilme.Image = Resources.iconFilme;
                     esconderBotões();
-                    filmesSelecionados.Remove(filmeEscolhido);
+                    // Remover o filme da lista de filmes selecionados com base no ID
+                    filmesSelecionados.RemoveAll(f => f.Id == filmeEscolhido.Id);
                     filmeEscolhido = null;
                     mudarTextoLabel(null);
                     AtualizarQuantidadeFilmes();

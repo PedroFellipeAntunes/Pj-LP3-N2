@@ -29,6 +29,9 @@ namespace ProjetoLP3.Janelas
 
         private async void Bt_Cadastrar_Click(object sender, EventArgs e)
         {
+            // Desativa o botão
+            Bt_Cadastrar.Enabled = false;
+
             Ct_CadastroUsuario ct_CadastroUsuario = new Ct_CadastroUsuario();
 
             string dataFormatada = Dtp_Data.Value.ToString("yyyy/MM/dd");
@@ -64,6 +67,9 @@ namespace ProjetoLP3.Janelas
 
                 MessageBox.Show("Erros na validação:\n" + erros, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+            // Reativa o botão
+            Bt_Cadastrar.Enabled = true;
         }
     }
 }

@@ -34,13 +34,14 @@
             Bt_CadastrarFilme = new ToolStripMenuItem();
             Bt_Conta = new ToolStripMenuItem();
             Bt_Fechar = new ToolStripMenuItem();
+            Bt_LogOff = new ToolStripMenuItem();
             Ms_Menu.SuspendLayout();
             SuspendLayout();
             // 
             // Ms_Menu
             // 
             Ms_Menu.Dock = DockStyle.Left;
-            Ms_Menu.Items.AddRange(new ToolStripItem[] { Bt_Catalogo, Bt_MeusFilmes, Bt_CadastrarFilme, Bt_Conta, Bt_Fechar });
+            Ms_Menu.Items.AddRange(new ToolStripItem[] { Bt_Catalogo, Bt_MeusFilmes, Bt_CadastrarFilme, Bt_Conta, Bt_Fechar, Bt_LogOff });
             Ms_Menu.Location = new Point(0, 0);
             Ms_Menu.Name = "Ms_Menu";
             Ms_Menu.Size = new Size(126, 360);
@@ -82,6 +83,13 @@
             Bt_Fechar.Text = "Fechar Janelas";
             Bt_Fechar.Click += Bt_Fechar_Click;
             // 
+            // Bt_LogOff
+            // 
+            Bt_LogOff.Name = "Bt_LogOff";
+            Bt_LogOff.Size = new Size(113, 19);
+            Bt_LogOff.Text = "Sair da Conta";
+            Bt_LogOff.Click += Bt_LogOff_Click;
+            // 
             // Jn_Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -107,5 +115,6 @@
         private ToolStripMenuItem Bt_MeusFilmes;
         private ToolStripMenuItem Bt_CadastrarFilme;
         private ToolStripMenuItem Bt_Fechar;
+        private ToolStripMenuItem Bt_LogOff;
     }
 }

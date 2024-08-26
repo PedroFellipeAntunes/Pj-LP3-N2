@@ -42,37 +42,40 @@ namespace ProjetoLP3.Janelas
             InitializeComponent();
         }
 
-        private void Jn_MeusFilmes_Load(object sender, EventArgs e)
+        private async void Jn_MeusFilmes_Load(object sender, EventArgs e)
         {
             //Carregar os filmes alugados primeiro
-            filmesAlugados = ct_MeusFilmes.obterFilmesAlugados(usuario);
+            //filmesAlugados = ct_MeusFilmes.obterFilmesAlugados(usuario);
 
             //Adicionar ao flowlayout
-            if (filmesAlugados == null)
-            {
-                MessageBox.Show("Você não possui filmes alugados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                ExibirFilmesAlugados();
+            //if (filmesAlugados == null)
+            //{
+                //MessageBox.Show("Você não possui filmes alugados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //else
+            //{
+                await ExibirFilmesAlugados();
 
                 // Adicionar evento de clique ao painel principal
                 flp_meusFilmes.MouseClick += new MouseEventHandler(flp_meusFilmes_MouseClick);
-            }
+            //}
         }
 
-        private void ExibirFilmesAlugados()
+        private async Task ExibirFilmesAlugados()
         {
             //Ao iniciar vamos limpar a lista de filmes
             flp_meusFilmes.Controls.Clear();
 
+            //Pedir ao BD os filmes
+            filmesAlugados = await ct_MeusFilmes.interfaceParaBDAsync(usuario, Tb_pesquisar.Text);
+
             foreach (var filme in filmesAlugados)
             {
                 //Pular filme se não tem o nome
-                if (!ct_MeusFilmes.contemNomeFilme(filme, Tb_pesquisar.Text))
-                {
-                    continue;
-                }
+                //if (!ct_MeusFilmes.contemNomeFilme(filme, Tb_pesquisar.Text))
+                //{
+                    //continue;
+                //}
 
                 // Configuração de design do Button
                 Button btnFilme = new Button
@@ -149,7 +152,7 @@ namespace ProjetoLP3.Janelas
         }
 
 
-        private void mudarTextoLabel(Filme filme)
+        private async void mudarTextoLabel(Filme filme)
         {
             if (filme != null)
             {
@@ -157,7 +160,7 @@ namespace ProjetoLP3.Janelas
                 lbdescricao.Text = filme.Descricao;
                 Lb_etaria.Text = "" + filme.FaixaEtaria;
                 Lb_duracao.Text = ct_Formatar.formatarHoraMinuto(filme.Duracao);
-                string dataHora = ct_MeusFilmes.retornarDataAluguelFilme(usuario, filme);
+                string dataHora = await ct_MeusFilmes.retornarDataAluguelFilmeAsync(filme);
                 Lb_DataAluguel.Text = ct_Formatar.formatarDataHora(dataHora);
             }
             else
@@ -192,10 +195,10 @@ namespace ProjetoLP3.Janelas
             MessageBox.Show($"Você está assistindo ao filme '{filme.Nome}'.", "Assistir", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void Tb_pesquisar_TextChanged(object sender, EventArgs e)
+        private async void Tb_pesquisar_TextChanged(object sender, EventArgs e)
         {
             //Verifica toda vez que o texto mudar
-            ExibirFilmesAlugados();
+            await ExibirFilmesAlugados();
         }
     }
 }

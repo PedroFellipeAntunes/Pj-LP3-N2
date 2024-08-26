@@ -1,4 +1,5 @@
-﻿using ProjetoLP3.Dados;
+﻿using ProjetoLP3.Banco.Serviço;
+using ProjetoLP3.Dados;
 using ProjetoLP3.Dados.Enum;
 using ProjetoLP3.Janelas;
 using System;
@@ -32,9 +33,47 @@ namespace ProjetoLP3.Controle
             usuario.Nome = nome;
             usuario.Email = email;
             usuario.Idade = idade;
+
+            // Eu sei que é valido pois ja fiz a verificação
+            interfaceParaBDAsync(usuario);
         }
 
-        public ResultadoValidacao verificarValidez(string nome, string email, string idade)
+        // Conecta a interface com o controlador de serviço
+        public async void interfaceParaBDAsync(Usuario usuario)
+        {
+            try
+            {
+                // Chama o serviço de filme para obter os filmes do bd
+                var servico = new Sv_Usuario();
+
+                // Faz pesquisa
+                await servico.AtualizarDadosUsuarioAsync(usuario);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao encontrar filmes: " + ex.Message);
+            }
+        }
+
+        private async Task<bool> verificarEmailBdAsync(string email)
+        {
+            try
+            {
+                // Chama o serviço de filme para obter os filmes do bd
+                var servico = new Sv_Usuario();
+
+                // Faz pesquisa
+                return await servico.VerificarEmailExistenteAsync(email);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao verificar email: " + ex.Message);
+            }
+        }
+
+        public async Task<ResultadoValidacao> verificarValidez(Usuario usuario, string nome, string email, string idade)
         {
             var resultado = new ResultadoValidacao();
 
@@ -50,6 +89,16 @@ namespace ProjetoLP3.Controle
             {
                 resultado.AdicionarErro("O formato do email é inválido.");
                 resultado.Sucesso = false;
+            }
+            else if (!usuario.Email.Equals(email)) // Apenas verificar se o email foi alterado
+            {
+                bool emailExiste = await verificarEmailBdAsync(email);
+
+                if (emailExiste)
+                {
+                    resultado.AdicionarErro("O email já está em uso.");
+                    resultado.Sucesso = false;
+                }
             }
 
             if (stringParaInt(idade) <= 0)

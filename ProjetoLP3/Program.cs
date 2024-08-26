@@ -17,15 +17,34 @@ namespace ProjetoLP3
 
             ApplicationConfiguration.Initialize();
 
-            // Cria a janela de login
-            using (Jn_Login loginForm = new Jn_Login())
+            bool sair = false;
+
+            while (!sair)
             {
-                // Exibe a janela de login e espera seu resultado
-                if (loginForm.ShowDialog() == DialogResult.OK)
+                // Cria a janela de login
+                using (Jn_Login loginForm = new Jn_Login())
                 {
-                    // Após o login ser bem-sucedido, cria e exibe a janela de menu
-                    Usuario usuario = loginForm.UsuarioAutenticado;
-                    Application.Run(new Jn_Menu(usuario));
+                    // Exibe a janela de login e espera seu resultado
+                    if (loginForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Após o login ser bem-sucedido, cria e exibe a janela de menu
+                        Usuario usuario = loginForm.UsuarioAutenticado;
+
+                        using (Jn_Menu menuForm = new Jn_Menu(usuario))
+                        {
+                            menuForm.ShowDialog();
+
+                            // Verifica se o usuário clicou em sair no menu
+                            if (menuForm.DialogResult == DialogResult.Cancel)
+                            {
+                                sair = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sair = true; // Sai do loop se o login falhar ou o usuário fechar a janela
+                    }
                 }
             }
         }

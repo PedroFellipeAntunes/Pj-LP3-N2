@@ -135,6 +135,7 @@
             Controls.Add(Lb_Senha);
             Controls.Add(Tb_Email);
             Controls.Add(Lb_Email);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Jn_CadastroUsuario";
             StartPosition = FormStartPosition.CenterScreen;

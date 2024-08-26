@@ -118,66 +118,78 @@ namespace ProjetoLP3.Banco.Serviço
                     new BsonDocument("status",
                         new BsonDocument("$in", statusValues)));
 
+                //Filtro para nome, so usado no meusfilmes
+                string filtro_local = janela ? "" : filtro;
+
+                var matchNameFilter = new BsonDocument("$match",
+                    new BsonDocument("nome",
+                    new BsonDocument
+                            {
+                                { "$regex", filtro_local },
+                                { "$options", "i" }
+                            }));
+
                 // Isto é um query aggreator do MongoDB
                 // isto são etapas separadas de uma pesquisa
                 PipelineDefinition<Filme, Filme> pipeline = new[]
                 {
-                new BsonDocument("$match",
-                new BsonDocument("_id",
-                ObjectId.Parse(usuario.Id))),
-                new BsonDocument("$lookup",
-                new BsonDocument
-                    {
-                        { "from", "alugueis" },
-                        { "localField", "_id" },
-                        { "foreignField", "id_usuario" },
-                        { "as", "alugueis_usuario" }
-                    }),
-                new BsonDocument("$unwind", "$alugueis_usuario"),
-                new BsonDocument("$project",
-                new BsonDocument
-                    {
-                        { "_id", 0 },
-                        { "alugueis_usuario", 1 }
-                    }),
-                new BsonDocument("$replaceRoot",
-                new BsonDocument("newRoot", "$alugueis_usuario")),
-                new BsonDocument("$lookup",
-                new BsonDocument
-                    {
-                        { "from", "aluguel_filmes" },
-                        { "localField", "_id" },
-                        { "foreignField", "id_aluguel" },
-                        { "as", "aluguel_filmes" }
-                    }),
-                new BsonDocument("$unwind", "$aluguel_filmes"),
-                matchStatusFilter, // Filtro de status complexo
-                new BsonDocument("$project",
-                new BsonDocument
-                    {
-                        { "_id", 0 },
-                        { "aluguel_filmes", 1 }
-                    }),
-                new BsonDocument("$replaceRoot",
-                new BsonDocument("newRoot", "$aluguel_filmes")),
-                new BsonDocument("$lookup",
-                new BsonDocument
-                    {
-                        { "from", "filmes" },
-                        { "localField", "id_filme" },
-                        { "foreignField", "_id" },
-                        { "as", "filme" }
-                    }),
-                new BsonDocument("$unwind", "$filme"),
-                new BsonDocument("$project",
-                new BsonDocument
-                    {
-                        { "_id", 0 },
-                        { "filme", 1 }
-                    }),
-                new BsonDocument("$replaceRoot",
-                new BsonDocument("newRoot", "$filme"))
-            };
+                    new BsonDocument("$match",
+                    new BsonDocument("_id",
+                    ObjectId.Parse(usuario.Id))),
+                    new BsonDocument("$lookup",
+                    new BsonDocument
+                        {
+                            { "from", "alugueis" },
+                            { "localField", "_id" },
+                            { "foreignField", "id_usuario" },
+                            { "as", "alugueis_usuario" }
+                        }),
+                    new BsonDocument("$unwind", "$alugueis_usuario"),
+                    new BsonDocument("$project",
+                    new BsonDocument
+                        {
+                            { "_id", 0 },
+                            { "alugueis_usuario", 1 }
+                        }),
+                    new BsonDocument("$replaceRoot",
+                    new BsonDocument("newRoot", "$alugueis_usuario")),
+                    new BsonDocument("$lookup",
+                    new BsonDocument
+                        {
+                            { "from", "aluguel_filmes" },
+                            { "localField", "_id" },
+                            { "foreignField", "id_aluguel" },
+                            { "as", "aluguel_filmes" }
+                        }),
+                    new BsonDocument("$unwind", "$aluguel_filmes"),
+                    matchStatusFilter, // Filtro de status complexo
+                    new BsonDocument("$project",
+                    new BsonDocument
+                        {
+                            { "_id", 0 },
+                            { "aluguel_filmes", 1 }
+                        }),
+                    new BsonDocument("$replaceRoot",
+                    new BsonDocument("newRoot", "$aluguel_filmes")),
+                    new BsonDocument("$lookup",
+                    new BsonDocument
+                        {
+                            { "from", "filmes" },
+                            { "localField", "id_filme" },
+                            { "foreignField", "_id" },
+                            { "as", "filme" }
+                        }),
+                    new BsonDocument("$unwind", "$filme"),
+                    new BsonDocument("$project",
+                    new BsonDocument
+                        {
+                            { "_id", 0 },
+                            { "filme", 1 }
+                        }),
+                    new BsonDocument("$replaceRoot",
+                    new BsonDocument("newRoot", "$filme")),
+                    matchNameFilter
+                };
 
                 var filmesAlugados = await _repositorio.AggregateAsync(pipeline);
 
@@ -236,6 +248,58 @@ namespace ProjetoLP3.Banco.Serviço
             };
 
             return await _repositorio.AggregateAsync(pipeline);
+        }
+
+        public async Task<string> ObterDataFinalFilmeAsync(Filme filme)
+        {
+            // Repositorio local do tipo string
+            RepositorioGenerico<Aluguel> _repositorioLocal = new RepositorioGenerico<Aluguel>("filmes");
+
+            // Criar o pipeline
+            PipelineDefinition<Aluguel, Aluguel> pipeline = new[]
+            {
+                new BsonDocument("$match",
+                new BsonDocument("_id",
+                ObjectId.Parse(filme.Id))),
+                new BsonDocument("$lookup",
+                new BsonDocument
+                    {
+                        { "from", "aluguel_filmes" },
+                        { "localField", "_id" },
+                        { "foreignField", "id_filme" },
+                        { "as", "aluguel_filmes" }
+                    }),
+                new BsonDocument("$unwind", "$aluguel_filmes"),
+                new BsonDocument("$project",
+                new BsonDocument
+                    {
+                        { "_id", 0 },
+                        { "aluguel_filmes", 1 }
+                    }),
+                new BsonDocument("$replaceRoot",
+                new BsonDocument("newRoot", "$aluguel_filmes")),
+                new BsonDocument("$lookup",
+                new BsonDocument
+                    {
+                        { "from", "alugueis" },
+                        { "localField", "id_aluguel" },
+                        { "foreignField", "_id" },
+                        { "as", "aluguel" }
+                    }),
+                new BsonDocument("$unwind", "$aluguel"),
+                new BsonDocument("$project",
+                new BsonDocument
+                    {
+                        { "_id", 0 },
+                        { "aluguel", 1 }
+                    }),
+                new BsonDocument("$replaceRoot",
+                new BsonDocument("newRoot", "$aluguel"))
+            };
+
+            var listaComUmElemento = await _repositorioLocal.AggregateAsync(pipeline);
+
+            return listaComUmElemento[0].DataFinal;
         }
     }
 }

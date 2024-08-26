@@ -30,6 +30,10 @@ namespace ProjetoLP3.Janelas
         {
             try
             {
+                // Desativa os botões de login e cadastro
+                Bt_Login.Enabled = false;
+                Bt_Cadastrar.Enabled = false;
+
                 // Validar se o input do usuario é correto
                 ResultadoValidacao validacao = ct_Login.verificarValidez(Tb_Email.Text, Tb_Senha.Text);
 
@@ -62,6 +66,12 @@ namespace ProjetoLP3.Janelas
             {
                 // Exibe a mensagem de erro ao usuário
                 MessageBox.Show($"Erro ao processar a solicitação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Reativa os botões de login e cadastro
+                Bt_Login.Enabled = true;
+                Bt_Cadastrar.Enabled = true;
             }
         }
 

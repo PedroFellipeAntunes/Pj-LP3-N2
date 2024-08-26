@@ -14,6 +14,29 @@ namespace ProjetoLP3.Banco.Serviço
             _repositorio = new RepositorioGenerico<Usuario>("usuarios"); // Nome da coleção
         }
 
+        // Método para atualizar dados do usuario
+        public async Task AtualizarDadosUsuarioAsync(Usuario usuario)
+        {
+            try
+            {
+                // Filtra pelo ID do usuário
+                var filter = Builders<Usuario>.Filter.Eq(u => u.Id, usuario.Id);
+
+                // Atualiza o usuário na coleção
+                await _repositorio.UpdateAsync(filter, usuario);
+            }
+            catch (Bd_Conexao_Erro ex)
+            {
+                // Propaga a exceção específica de conexão para ser tratada pela interface
+                throw new Exception("Erro de conexão ao editar usuário: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // Propaga qualquer outro erro genérico
+                throw new Exception("Erro ao editar usuário: " + ex.Message);
+            }
+        }
+
         // Método para verificar se o email já existe no banco de dados
         public async Task<bool> VerificarEmailExistenteAsync(string email)
         {
@@ -22,6 +45,7 @@ namespace ProjetoLP3.Banco.Serviço
                 var filtro = Builders<Usuario>.Filter.Eq(u => u.Email, email);
                 var usuarioExistente = await _repositorio.FindOneAsync(filtro);
 
+                // Se for diferente de nulo então existe
                 return usuarioExistente != null;
             }
             catch (Bd_Conexao_Erro ex)

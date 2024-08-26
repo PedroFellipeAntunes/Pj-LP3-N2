@@ -1,4 +1,5 @@
-﻿using ProjetoLP3.Dados;
+﻿using ProjetoLP3.Banco.Serviço;
+using ProjetoLP3.Dados;
 using ProjetoLP3.Dados.Enum;
 using ProjetoLP3.Janelas;
 using System;
@@ -49,20 +50,39 @@ namespace ProjetoLP3.Controle
             return filmesAtualmenteAlugados;
         }
 
-        public string retornarDataAluguelFilme(Usuario usuario, Filme filme)
+        // Conecta a interface com o controlador de serviço
+        public async Task<List<Filme>> interfaceParaBDAsync(Usuario usuario, string filtro)
         {
-            foreach (var aluguel in usuario.ListaAlugueis)
+            try
             {
-                if (aluguel.Status.Equals(Status.Pago))
-                {
-                    if (aluguel.ListaFilmes.Contains(filme))
-                    {
-                        return aluguel.DataFinal;
-                    }
-                }
-            }
+                // Chama o serviço de filme para obter os filmes do bd
+                var servico = new Sv_Filme();
 
-            return "Erro";
+                // Faz pesquisa
+                return await servico.ObterFilmesAsync(false, usuario, filtro);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao encontrar filmes: " + ex.Message);
+            }
+        }
+
+        public async Task<string> retornarDataAluguelFilmeAsync(Filme filme)
+        {
+            try
+            {
+                // Chama o serviço para obter as datas finais
+                var servico = new Sv_Filme();
+
+                // Faz pesquisa
+                return await servico.ObterDataFinalFilmeAsync(filme);
+            }
+            catch (Exception ex)
+            {
+                // Repropaga a exceção para ser tratada pela interface
+                throw new Exception("Erro ao encontrar data final: " + ex.Message);
+            }
         }
     }
 }

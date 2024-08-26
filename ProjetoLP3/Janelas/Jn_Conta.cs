@@ -60,14 +60,14 @@ namespace ProjetoLP3.Janelas
         }
 
         //LOGICA
-        private void Bt_SalvarEditar_Click(object sender, EventArgs e)
+        private async void Bt_SalvarEditar_Click(object sender, EventArgs e)
         {
             mudarEstado();
 
             //Verificar se os dados são validos antes de salvar
             if (editando == false)
             {
-                ResultadoValidacao validacao = ct_Conta.verificarValidez(Tb_Nome.Text, Tb_Email.Text, Lb_idadeTxt.Text);
+                ResultadoValidacao validacao = await ct_Conta.verificarValidez(usuario, Tb_Nome.Text, Tb_Email.Text, Lb_idadeTxt.Text);
 
                 //Tudo valido
                 if (validacao.Sucesso)

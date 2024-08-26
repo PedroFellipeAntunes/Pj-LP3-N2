@@ -155,5 +155,19 @@ namespace ProjetoLP3
 
             return lf;
         }
+
+        private void Bt_LogOff_Click(object sender, EventArgs e)
+        {
+            // Pergunta ao usuário se ele realmente deseja sair
+            DialogResult result = MessageBox.Show("Você realmente deseja sair?", "Confirmar Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Se o usuário confirmar
+            if (result == DialogResult.Yes)
+            {
+                // Define o DialogResult como Continue e fecha a janela de menu
+                this.DialogResult = DialogResult.Continue;
+                this.Close();
+            }
+        }
     }
 }

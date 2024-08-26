@@ -103,6 +103,7 @@
             Controls.Add(Tb_Email);
             Controls.Add(Lb_Email);
             Controls.Add(Bt_Login);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Jn_Login";
             StartPosition = FormStartPosition.CenterScreen;
